@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Control tributario · Actuaria+</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   TOKENS · Design System Actuaria (Figma N1wh3u4sX3UGyUU5oWOaz6)
+   + tokens del chrome real de Actuaria+ v1.11.2 (ACTAF-5236)
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  /* Colours semantic — Light Actuaria */
+  --color-text-strong: rgba(0,6,38,.90);
+  --color-text-weak: rgba(0,9,51,.65);
+  --color-text-brand: #151f47;
+  --color-bg-base: #ffffff;
+  --color-bg-sunken: #f5f6fa;
+  --color-fill-brand-strong: #151f47;
+  --color-fill-brand-weak: rgba(21,31,71,.05);
+  --color-stroke-weak: rgba(0,17,102,.10);
+  --color-stroke-brand-weak: rgba(21,31,71,.20);
+
+  /* Spacing / radius */
+  --spacing-4:4px; --spacing-8:8px; --spacing-12:12px; --spacing-16:16px;
+  --spacing-20:20px; --spacing-24:24px; --spacing-32:32px; --spacing-40:40px;
+  --radius-8:8px; --radius-12:12px; --radius-16:16px; --radius-20:20px; --radius-24:24px;
+
+  /* Typography */
+  --font-family-body:"Nunito",-apple-system,Segoe UI,sans-serif;
+  --font-size-h2:32px; --line-height-h2:40px;
+  --font-size-h3:24px; --line-height-h3:32px;
+  --font-size-h4:20px; --line-height-h4:28px;
+  --font-size-small:16px; --line-height-small:24px;
+  --font-size-tiny:14px; --line-height-tiny:20px;
+  --font-size-mini:12px; --line-height-mini:18px;
+
+  /* Chrome de la plataforma real */
+  --navy:#151F47;
+  --navy-deep:#0E1533;
+  --cell:#D9DEEA;
+  --input-bd:#CDD4E2;
+  --pill-off:#EEF1F7;
+  --indigo:#4C64D9;
+  --orange-ink:#A8431C;
+
+  /* Tonos semánticos de TEXTO (AA). El 500 es solo relleno, nunca texto. */
+  --green-ink:#1B5E20;  --green-bg:#E8F5E9;  --green-bd:#A5D6A7;
+  --amber-ink:#663C00;  --amber-bg:#FFF4E5;  --amber-bd:#FFCC80;
+  --red-ink:#5F2120;    --red-bg:#FDEDED;    --red-bd:#F5A5A5;
+  --indigo-ink:#2F5FCC; --indigo-bg:#EEF2FE; --indigo-bd:#C3CFF6;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font-family-body);
+  color:var(--color-text-strong);
+  background:var(--color-bg-sunken);
+  font-size:var(--font-size-small);
+  line-height:var(--line-height-small);
+  -webkit-font-smoothing:antialiased;
+}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+a{color:var(--indigo-ink);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── Layout ── */
+.shell{display:grid;grid-template-columns:292px minmax(0,1fr);min-height:100vh}
+.sb{background:var(--navy);color:#fff;display:flex;flex-direction:column;padding:20px 18px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.main{display:flex;flex-direction:column;min-width:0}
+
+/* ── Sidebar ── */
+.sb-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:22px}
+.sb-logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;letter-spacing:-.01em}
+.sb-logo .mark{width:34px;height:34px;border-radius:50%;border:2px solid #fff;display:grid;place-items:center;flex-shrink:0}
+.sb-burger{background:none;border:0;color:#fff;padding:6px;border-radius:8px;line-height:0}
+.sb-burger:hover{background:rgba(255,255,255,.10)}
+.sb-search{display:flex;align-items:center;gap:10px;background:#fff;border-radius:var(--radius-12);padding:10px 14px;margin-bottom:22px}
+.sb-search input{border:0;outline:0;flex:1;min-width:0;font-family:inherit;font-size:var(--font-size-tiny);color:var(--color-text-strong)}
+.sb-sec{font-size:var(--font-size-mini);letter-spacing:.10em;text-transform:uppercase;color:rgba(255,255,255,.62);font-weight:700;margin:20px 0 8px 4px}
+.sb-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:var(--radius-12);color:rgba(255,255,255,.92);font-size:var(--font-size-tiny);font-weight:600;position:relative}
+.sb-item:hover{background:rgba(255,255,255,.08);text-decoration:none;color:#fff}
+.sb-item .chev{margin-left:auto;opacity:.65}
+.sb-sub{padding-left:14px}
+.sb-sub .sb-item{font-weight:400}
+.sb-item.is-on{background:rgba(255,255,255,.13);font-weight:700}
+.sb-item.is-on::before{content:"";position:absolute;left:-18px;top:8px;bottom:8px;width:4px;border-radius:0 4px 4px 0;background:#fff}
+.sb-card{margin-top:auto;background:rgba(255,255,255,.07);border-radius:var(--radius-16);padding:18px;text-align:center;font-size:var(--font-size-mini);line-height:1.6;color:rgba(255,255,255,.80)}
+.sb-card b{display:block;color:#fff;font-size:var(--font-size-tiny)}
+
+/* ── Topbar ── */
+.tb{background:var(--navy-deep);height:104px;display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:0 40px;border-bottom-left-radius:var(--radius-24)}
+.tb-bell{background:none;border:0;color:#fff;line-height:0;padding:8px;border-radius:10px}
+.tb-bell:hover{background:rgba(255,255,255,.10)}
+.tb-ent{display:flex;align-items:center;gap:12px;color:#fff;font-weight:800;font-size:var(--font-size-small)}
+.tb-ent .ico{width:38px;height:38px;border-radius:var(--radius-8);background:rgba(255,255,255,.14);display:grid;place-items:center}
+
+/* ── Content ── */
+.content{padding:34px 40px 90px;max-width:1400px;width:100%}
+h1{font-size:var(--font-size-h2);line-height:var(--line-height-h2);font-weight:800;color:var(--navy);margin:0 0 4px;letter-spacing:-.015em}
+.hello-sub{color:var(--color-text-weak);font-size:var(--font-size-small);margin:0 0 22px}
+
+/* Pills de producto */
+.pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
+.pill{background:var(--pill-off);border:0;border-radius:999px;padding:11px 22px;font-weight:700;font-size:var(--font-size-tiny);color:var(--navy)}
+.pill:hover{background:#E3E8F2}
+.pill.is-on{background:var(--navy);color:#fff}
+.pill sup{font-size:9px;font-weight:700;margin-left:3px;color:var(--indigo-ink)}
+.pill.is-on sup{color:#9DB2F5}
+
+/* Tabs internas del módulo */
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--color-stroke-weak);margin-bottom:28px;overflow-x:auto}
+.tab{background:none;border:0;padding:12px 18px 14px;border-bottom:3px solid transparent;color:var(--color-text-weak);font-weight:700;font-size:var(--font-size-tiny);white-space:nowrap;text-align:left;line-height:1.25}
+.tab .tq{display:block;font-weight:400;font-size:var(--font-size-mini);color:var(--color-text-weak);margin-top:2px}
+.tab:hover{color:var(--navy)}
+.tab.is-on{color:var(--navy);border-bottom-color:var(--navy)}
+.tab.is-on .tq{color:var(--indigo-ink)}
+
+/* Paneles */
+.panel{display:none;animation:fade .18s ease}
+.panel.is-on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ═══ MOVIMIENTO 2 · Barra de estado del cierre ═══ */
+.status{background:#fff;border:1px solid var(--color-stroke-weak);border-radius:var(--radius-16);
+  padding:18px 22px;margin-bottom:20px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;
+  box-shadow:0 1px 2px rgba(15,23,42,.05)}
+.status .grp{display:flex;flex-direction:column;gap:2px;min-width:0}
+.status .k{font-size:var(--font-size-mini);color:var(--color-text-weak);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.status .v{font-weight:800;color:var(--navy);font-size:var(--font-size-small)}
+.status .sep{width:1px;align-self:stretch;background:var(--color-stroke-weak)}
+.status .right{margin-left:auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.sel{appearance:none;background:#fff url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23151F47' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 12px center;
+  border:1px solid var(--input-bd);border-radius:10px;padding:9px 34px 9px 13px;font-family:inherit;
+  font-size:var(--font-size-tiny);font-weight:700;color:var(--navy);cursor:pointer}
+.sel:focus{outline:2px solid var(--indigo);outline-offset:1px}
+
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 12px;
+  font-size:var(--font-size-mini);font-weight:700;line-height:1.4;border:1px solid transparent}
+.chip.amber{background:var(--amber-bg);color:var(--amber-ink);border-color:var(--amber-bd)}
+.chip.green{background:var(--green-bg);color:var(--green-ink);border-color:var(--green-bd)}
+.chip.grey{background:var(--pill-off);color:var(--color-text-weak);border-color:var(--color-stroke-weak)}
+.chip.indigo{background:var(--indigo-bg);color:var(--indigo-ink);border-color:var(--indigo-bd)}
+
+/* ═══ MOVIMIENTO 3 · Causa-efecto salidas → cierre ═══ */
+.link-act{background:none;border:0;padding:0;color:var(--indigo-ink);font-weight:700;
+  font-size:var(--font-size-tiny);text-decoration:underline;text-underline-offset:2px}
+
+/* ═══ MOVIMIENTO 5 · Puerta de entrada ═══ */
+.door{background:linear-gradient(135deg,#151F47 0%,#233166 100%);color:#fff;border-radius:var(--radius-20);
+  padding:26px 28px;margin-bottom:24px;position:relative;overflow:hidden}
+.door h2{margin:0 0 4px;font-size:var(--font-size-h4);line-height:var(--line-height-h4);font-weight:800}
+.door p{margin:0 0 20px;color:rgba(255,255,255,.80);font-size:var(--font-size-tiny);max-width:640px}
+.door-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.door-card{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius-12);
+  padding:15px 16px;text-align:left;color:#fff;display:flex;flex-direction:column;gap:5px;min-width:0}
+.door-card:hover{background:rgba(255,255,255,.16)}
+.door-card b{font-size:var(--font-size-tiny);font-weight:800}
+.door-card span{font-size:var(--font-size-mini);color:rgba(255,255,255,.78);line-height:1.5}
+.door-x{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.12);border:0;color:#fff;
+  width:30px;height:30px;border-radius:50%;line-height:0;display:grid;place-items:center}
+.door-x:hover{background:rgba(255,255,255,.24)}
+
+/* ═══ MOVIMIENTO 1 · La respuesta primero ═══ */
+.answer{background:#fff;border:2px solid var(--navy);border-radius:var(--radius-20);overflow:hidden;margin-bottom:24px;
+  box-shadow:0 6px 22px rgba(15,23,42,.08)}
+.answer-hd{background:var(--navy);color:#fff;padding:18px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.answer-hd h2{margin:0;font-size:var(--font-size-h4);line-height:var(--line-height-h4);font-weight:800}
+.answer-hd .sub{color:rgba(255,255,255,.78);font-size:var(--font-size-mini);width:100%;margin-top:-4px}
+.answer-bd{padding:22px 24px}
+.figure{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;margin-bottom:6px}
+.figure .num{font-size:42px;line-height:1.1;font-weight:800;color:var(--navy);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.figure .lbl{font-size:var(--font-size-tiny);color:var(--color-text-weak);font-weight:600}
+.trace{font-size:var(--font-size-mini);color:var(--color-text-weak);margin-bottom:20px}
+
+/* Asiento */
+.asiento{border:1px solid var(--color-stroke-weak);border-radius:var(--radius-12);overflow:hidden}
+.asiento + .asiento{margin-top:14px}
+.asiento-hd{background:var(--color-bg-sunken);padding:11px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  border-bottom:1px solid var(--color-stroke-weak)}
+.asiento-hd b{font-size:var(--font-size-tiny);color:var(--navy);font-weight:800}
+.asiento-hd .sp{margin-left:auto}
+.at{width:100%;border-collapse:collapse;font-size:var(--font-size-tiny)}
+.at th{text-align:left;font-size:var(--font-size-mini);text-transform:uppercase;letter-spacing:.05em;
+  color:var(--color-text-weak);font-weight:700;padding:9px 16px;background:#fbfcfe;border-bottom:1px solid var(--color-stroke-weak)}
+.at td{padding:11px 16px;border-bottom:1px solid var(--color-stroke-weak);vertical-align:top}
+.at tr:last-child td{border-bottom:0}
+.at .n{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.at .ind{padding-left:38px;color:var(--color-text-weak)}
+.at tfoot td{background:#fbfcfe;font-weight:800;border-top:1px solid var(--color-stroke-weak)}
+
+.btn{border:1px solid var(--input-bd);background:#fff;border-radius:10px;padding:8px 14px;
+  font-size:var(--font-size-mini);font-weight:700;color:var(--navy);display:inline-flex;align-items:center;gap:7px;line-height:1.3}
+.btn:hover{background:var(--pill-off)}
+.btn.pri{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.pri:hover{background:#1d2a5e}
+.btn.lg{padding:12px 22px;font-size:var(--font-size-tiny);border-radius:12px}
+.btn[disabled]{background:var(--cell);border-color:var(--cell);color:#8E97AE;cursor:not-allowed}
+.btn.ok{background:var(--green-bg);border-color:var(--green-bd);color:var(--green-ink)}
+
+/* ═══ MOVIMIENTO 1b · Sustento colapsable ═══ */
+.fold{background:#fff;border:1px solid var(--color-stroke-weak);border-radius:var(--radius-16);margin-bottom:14px;overflow:hidden}
+.fold > summary{list-style:none;cursor:pointer;padding:18px 22px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.fold > summary::-webkit-details-marker{display:none}
+.fold > summary:hover{background:#fbfcfe}
+.fold .ft{font-weight:800;color:var(--navy);font-size:var(--font-size-small)}
+.fold .fsum{color:var(--color-text-weak);font-size:var(--font-size-tiny);margin-left:auto;font-variant-numeric:tabular-nums}
+.fold .car{transition:transform .18s ease;color:var(--navy);line-height:0;flex-shrink:0}
+.fold[open] .car{transform:rotate(180deg)}
+.fold-bd{padding:0 22px 22px}
+
+/* Cadena de 6 cuadros */
+.chain{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin-bottom:16px}
+.box{border:1px solid var(--color-stroke-weak);border-radius:var(--radius-12);padding:14px 16px;background:#fff;min-width:0}
+.box .op{font-size:var(--font-size-mini);font-weight:800;color:var(--indigo-ink)}
+.box .bl{font-size:var(--font-size-mini);color:var(--color-text-weak);line-height:1.45;margin:2px 0 8px;font-weight:600}
+.box .bn{font-size:var(--font-size-h4);line-height:1.2;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+.box.tot{background:var(--navy);border-color:var(--navy)}
+.box.tot .op,.box.tot .bl{color:rgba(255,255,255,.72)}
+.box.tot .bn{color:#fff}
+.box.neg .bn{color:var(--orange-ink)}
+
+.cuadra{display:flex;align-items:center;gap:8px;font-size:var(--font-size-mini);font-weight:700;
+  color:var(--green-ink);background:var(--green-bg);border:1px solid var(--green-bd);
+  border-radius:10px;padding:9px 14px}
+
+/* Nota ORI (restricción) */
+.note{border-left:3px solid var(--indigo);background:var(--indigo-bg);border-radius:0 10px 10px 0;
+  padding:12px 16px;font-size:var(--font-size-mini);line-height:1.6;color:#2b3550;margin:14px 0}
+.note b{color:var(--navy)}
+.legal{border-left:3px solid var(--cell);background:var(--color-bg-sunken);border-radius:0 10px 10px 0;
+  padding:12px 16px;font-size:var(--font-size-mini);line-height:1.6;color:var(--color-text-weak);margin:14px 0}
+
+/* Tablas generales */
+.tw{overflow-x:auto;border:1px solid var(--color-stroke-weak);border-radius:var(--radius-12);background:#fff}
+table.gt{width:100%;border-collapse:collapse;font-size:var(--font-size-tiny);min-width:640px}
+table.gt th{text-align:left;background:#fbfcfe;font-size:var(--font-size-mini);text-transform:uppercase;
+  letter-spacing:.05em;color:var(--color-text-weak);font-weight:700;padding:11px 16px;border-bottom:1px solid var(--color-stroke-weak);white-space:nowrap}
+table.gt td{padding:12px 16px;border-bottom:1px solid var(--color-stroke-weak)}
+table.gt tbody tr:last-child td{border-bottom:0}
+table.gt tbody tr:hover{background:#fbfcfe}
+table.gt .n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:700}
+
+/* Cards genéricas */
+.card{background:#fff;border:1px solid var(--color-stroke-weak);border-radius:var(--radius-16);padding:22px;margin-bottom:16px}
+.card > h3{margin:0 0 4px;font-size:var(--font-size-h4);line-height:var(--line-height-h4);font-weight:800;color:var(--navy)}
+.card > .lead{margin:0 0 18px;color:var(--color-text-weak);font-size:var(--font-size-tiny)}
+
+/* Campos (patrón de la plataforma: celda gris + input blanco) */
+.frow{display:grid;grid-template-columns:186px minmax(0,1fr);border:1px solid var(--input-bd);
+  border-radius:10px;overflow:hidden;margin-bottom:12px;background:#fff}
+.frow .fl{background:var(--cell);padding:13px 16px;font-weight:700;font-size:var(--font-size-tiny);
+  color:var(--navy);border-right:1px solid var(--input-bd);display:flex;align-items:center}
+.frow .fv{padding:0;min-width:0;display:flex;align-items:center}
+.frow .fv input,.frow .fv select{border:0;outline:0;width:100%;min-width:0;padding:13px 16px;
+  font-family:inherit;font-size:var(--font-size-tiny);color:var(--color-text-strong);background:transparent}
+.frow .fv select{appearance:none;cursor:pointer;font-weight:600;
+  background:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23151F47' stroke-width='2.4' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center;
+  padding-right:38px}
+/* 420 y no 320: con la celda de etiqueta de 186px, tres columnas dejan el
+   input tan angosto que los selects truncan su propio texto.
+   TRAMPA: `minmax(420px,1fr)` a secas fuerza una pista de 420px aunque el
+   contenedor mida menos → desborde horizontal en móvil. El `min()` la clampa. */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr));gap:0 20px}
+
+/* Delta preview (movimiento 3) */
+.delta{border:1px dashed var(--indigo-bd);background:var(--indigo-bg);border-radius:var(--radius-12);padding:18px 20px;margin-top:8px}
+.delta h4{margin:0 0 12px;font-size:var(--font-size-tiny);font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.05em}
+.dl{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid rgba(47,95,204,.16);font-size:var(--font-size-tiny)}
+.dl:last-child{border-bottom:0;font-weight:800}
+.dl .dv{font-variant-numeric:tabular-nums;font-weight:700;white-space:nowrap}
+.dl .up{color:var(--green-ink)}
+.dl .dn{color:var(--orange-ink)}
+
+/* Gráfico de barras (Análisis)
+   TRAMPA: un `height:%` en la columna NO resuelve si su padre no tiene altura
+   definida. Por eso el track intermedio con flex:1 — él sí tiene altura real. */
+.bars{display:flex;align-items:stretch;gap:14px;height:250px;padding:16px 4px 0;border-bottom:1px solid var(--color-stroke-weak)}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
+.bar .btrack{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;min-height:0}
+.bar .bcol{width:100%;max-width:66px;background:linear-gradient(180deg,#4C64D9 0%,#151F47 100%);
+  border-radius:8px 8px 0 0;transition:height .5s cubic-bezier(.2,.8,.3,1)}
+.bar .bv{font-size:var(--font-size-mini);font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+.bar .bx{font-size:var(--font-size-mini);color:var(--color-text-weak);font-weight:700}
+
+/* Subtabs */
+.subtabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.subtab{background:var(--pill-off);border:0;border-radius:999px;padding:9px 18px;font-size:var(--font-size-mini);
+  font-weight:700;color:var(--navy)}
+.subtab.is-on{background:var(--navy);color:#fff}
+.sp{display:none}.sp.is-on{display:block}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,20px);background:var(--navy);color:#fff;
+  padding:13px 22px;border-radius:999px;font-size:var(--font-size-tiny);font-weight:700;opacity:0;
+  pointer-events:none;transition:.25s ease;z-index:9998;box-shadow:0 8px 24px rgba(15,23,42,.28)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* FAB + tour */
+.fab{position:fixed;right:26px;bottom:26px;width:58px;height:58px;border-radius:50%;background:#25D366;
+  border:0;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.22);z-index:60}
+.tour-btn{position:fixed;right:98px;bottom:34px;background:var(--navy);color:#fff;border:0;border-radius:999px;
+  padding:12px 20px;font-weight:800;font-size:var(--font-size-tiny);display:inline-flex;align-items:center;gap:9px;
+  box-shadow:0 6px 18px rgba(15,23,42,.28);z-index:60}
+#tourSpot{position:fixed;border-radius:14px;box-shadow:0 0 0 9999px rgba(14,21,51,.76);z-index:9990;
+  pointer-events:none;transition:all .4s cubic-bezier(.2,.8,.3,1);display:none}
+#tourPop{position:fixed;z-index:9991;background:#fff;border-radius:var(--radius-16);padding:20px;width:352px;
+  max-width:calc(100vw - 32px);box-shadow:0 18px 44px rgba(0,0,0,.3);display:none}
+#tourPop h4{margin:0 0 6px;font-size:var(--font-size-small);font-weight:800;color:var(--navy)}
+#tourPop p{margin:0 0 16px;font-size:var(--font-size-tiny);color:var(--color-text-weak);line-height:1.6}
+.tp-foot{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.tp-dots{font-size:var(--font-size-mini);color:var(--color-text-weak);font-weight:700}
+.tp-btns{margin-left:auto;display:flex;gap:8px}
+
+@media (max-width:1080px){
+  .shell{grid-template-columns:1fr}
+  .sb{display:none}
+  .tb{border-bottom-left-radius:0;padding:0 20px;height:76px}
+  .content{padding:24px 20px 90px}
+  .frow{grid-template-columns:1fr}
+  .frow .fl{border-right:0;border-bottom:1px solid var(--input-bd)}
+  .figure .num{font-size:34px}
+  .tour-btn{right:auto;left:20px;bottom:28px}
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ══════ SIDEBAR ══════ -->
+  <aside class="sb">
+    <div class="sb-top">
+      <div class="sb-logo">
+        <span class="mark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.6" fill="#fff" stroke="none"/></svg></span>
+        actuaria+
+      </div>
+      <button class="sb-burger" aria-label="Menú"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </div>
+
+    <div class="sb-search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8E97AE" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+      <input placeholder="Buscar..." aria-label="Buscar">
+    </div>
+
+    <a class="sb-item" href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.8V21h14V9.8"/></svg>Inicio</a>
+
+    <div class="sb-sec">Panel general</div>
+    <a class="sb-item" href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c0-3.6 3.1-5.6 7-5.6s7 2 7 5.6"/></svg>Mi cuenta<span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></a>
+    <div class="sb-sub">
+      <a class="sb-item" href="#">Datos del usuario</a>
+      <a class="sb-item" href="#">Entidades registradas</a>
+      <a class="sb-item" href="#">Equipo</a>
+    </div>
+    <a class="sb-item is-on" href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21h18"/><path d="M5 21V9l7-5 7 5v12"/><path d="M10 21v-5h4v5"/></svg>Servicios<span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 15l-6-6-6 6"/></svg></span></a>
+    <a class="sb-item" href="#"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-2.7 1.1V21a2 2 0 11-4 0v-.1A1.6 1.6 0 006.6 19.4l-.1.1a2 2 0 11-2.8-2.8l.1-.1A1.6 1.6 0 003 15H3a2 2 0 110-4h.1A1.6 1.6 0 004.6 9.4l-.1-.1a2 2 0 112.8-2.8l.1.1A1.6 1.6 0 009 6.6V6a2 2 0 114 0v.1a1.6 1.6 0 002.7 1.1l.1-.1a2 2 0 112.8 2.8l-.1.1a1.6 1.6 0 001.1 2.7H21a2 2 0 110 4h-.1z"/></svg>Recursos<span class="chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span></a>
+
+    <div class="sb-card">
+      <b>Actuaria+</b>
+      soporteplus@actuaria.com<br>v 1.11.2
+    </div>
+  </aside>
+
+  <!-- ══════ MAIN ══════ -->
+  <div class="main">
+    <header class="tb">
+      <button class="tb-bell" aria-label="Notificaciones"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg></button>
+      <div class="tb-ent">
+        <span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 21h18"/><path d="M5 21V5h9v16"/><path d="M14 10h5v11"/><path d="M8 8h3M8 12h3M8 16h3"/></svg></span>
+        TEOJAMA COMERCIAL
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </header>
+
+    <div class="content">
+      <h1>Hola, Renato</h1>
+      <p class="hello-sub">Última conexión fue a las 2:40pm</p>
+
+      <!-- Pills de producto de la plataforma -->
+      <nav class="pills" aria-label="Productos">
+        <button class="pill">Inicio</button>
+        <button class="pill">Estudio actuarial</button>
+        <button class="pill">Impuestos diferidos</button>
+        <button class="pill">Actas de jubilación</button>
+        <button class="pill is-on">Control tributario</button>
+        <button class="pill">NavIA <sup>Beta</sup></button>
+      </nav>
+
+      <!-- MOVIMIENTO 4 · nombre canónico + la pregunta que responde -->
+      <nav class="tabs" id="tabs" aria-label="Secciones de Control tributario">
+        <button class="tab is-on" data-p="cierre">Mi cierre<span class="tq">la cifra y el asiento</span></button>
+        <button class="tab" data-p="salidas">Salidas<span class="tq">registrar quién salió</span></button>
+        <button class="tab" data-p="reportes">Reportes contables<span class="tq">cómo lo declaro</span></button>
+        <button class="tab" data-p="kardex">Kárdex<span class="tq">de dónde sale cada cifra</span></button>
+        <button class="tab" data-p="analisis">Análisis<span class="tq">cómo evoluciona</span></button>
+      </nav>
+
+      <!-- ═══════════ PANEL 1 · MI CIERRE ═══════════ -->
+      <section class="panel is-on" id="p-cierre">
+
+        <!-- MOVIMIENTO 2 · barra de estado -->
+        <div class="status" data-tour="estado">
+          <div class="grp">
+            <span class="k">Ejercicio</span>
+            <select class="sel" id="selEj" aria-label="Ejercicio">
+              <option>2025</option><option>2024</option><option>2023</option>
+            </select>
+          </div>
+          <div class="sep"></div>
+          <div class="grp">
+            <span class="k">Beneficio</span>
+            <select class="sel" id="selBen" aria-label="Tipo de beneficio">
+              <option>Jubilación patronal</option><option>Desahucio</option>
+            </select>
+          </div>
+          <div class="sep"></div>
+          <div class="grp">
+            <span class="k">Estado del cierre</span>
+            <span class="v" id="estadoV">
+              <span class="chip amber">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                Preliminar
+              </span>
+            </span>
+          </div>
+          <div class="right">
+            <!-- MOVIMIENTO 3 · causa-efecto explícita -->
+            <span class="chip grey">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/><path d="M12 19H5V5h7"/></svg>
+              <span id="nSal">3</span> salidas registradas
+            </span>
+            <button class="link-act" data-go="salidas">¿Falta alguna?</button>
+          </div>
+        </div>
+
+        <div class="note" style="margin-top:-6px">
+          <b>El ejercicio 2025 todavía está en curso.</b> Las cifras son estimadas y cambiarán al cierre.
+          Sirven para provisionar y anticipar, no para declarar.
+        </div>
+
+        <!-- MOVIMIENTO 5 · puerta de entrada -->
+        <div class="door" id="door" data-tour="puerta">
+          <button class="door-x" id="doorX" aria-label="Ocultar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+          <h2>¿Qué puedes hacer aquí?</h2>
+          <p>Cuatro preguntas, cuatro destinos. Este panel vuelve a aparecer en cada ejercicio nuevo,
+             porque sabemos que entras una vez al año.</p>
+          <div class="door-grid">
+            <button class="door-card" data-go="salidas"><b>¿Salió alguien este año?</b><span>Regístralo. Cambia las cifras de tu cierre.</span></button>
+            <button class="door-card" data-go="reportes"><b>¿Cómo lo declaro?</b><span>Asientos completos, conciliación y casilleros del 101.</span></button>
+            <button class="door-card" data-go="kardex"><b>¿De dónde sale la cifra?</b><span>El detalle persona por persona, para el auditor.</span></button>
+            <button class="door-card" data-go="analisis"><b>¿Cómo viene evolucionando?</b><span>La historia año por año, con gráficos.</span></button>
+          </div>
+        </div>
+
+        <!-- MOVIMIENTO 1 · LA RESPUESTA PRIMERO -->
+        <div class="answer" data-tour="respuesta">
+          <div class="answer-hd">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3 7-7"/><path d="M20 12v7a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h9"/></svg>
+            <h2>Lo que tienes que registrar</h2>
+            <button class="btn ok" id="copyAll" style="margin-left:auto">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+              Copiar asiento completo
+            </button>
+            <span class="sub">Ejercicio 2025 · Jubilación patronal · cifras preliminares</span>
+          </div>
+
+          <div class="answer-bd">
+            <div class="figure">
+              <span class="num">68,420.00</span>
+              <span class="lbl">provisión del periodo · USD</span>
+            </div>
+            <p class="trace">
+              Esta es la cifra que va a tus libros este año.
+              <button class="link-act" data-go="kardex">¿De dónde sale?</button> ·
+              <button class="link-act" data-go="reportes">¿Cómo la declaro?</button>
+            </p>
+
+            <div class="asiento">
+              <div class="asiento-hd">
+                <b>1 · Provisión por jubilación patronal</b>
+                <button class="btn sp copybtn" data-c="Gasto por jubilación patronal 68420.00 / Provisión por jubilación patronal 68420.00">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>Copiar
+                </button>
+              </div>
+              <table class="at">
+                <thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
+                <tbody>
+                  <tr><td>Gasto por jubilación patronal</td><td class="n">68,420.00</td><td class="n">—</td></tr>
+                  <tr><td class="ind">Provisión por jubilación patronal</td><td class="n">—</td><td class="n">68,420.00</td></tr>
+                </tbody>
+                <tfoot><tr><td>Totales</td><td class="n">68,420.00</td><td class="n">68,420.00</td></tr></tfoot>
+              </table>
+            </div>
+
+            <div class="asiento">
+              <div class="asiento-hd">
+                <b>2 · Impuesto diferido generado</b>
+                <button class="btn sp copybtn" data-c="Activo por impuesto diferido 15394.50 / Gasto por impuesto a la renta diferido 15394.50">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>Copiar
+                </button>
+              </div>
+              <table class="at">
+                <thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
+                <tbody>
+                  <tr><td>Activo por impuesto diferido</td><td class="n">15,394.50</td><td class="n">—</td></tr>
+                  <tr><td class="ind">Gasto por impuesto a la renta diferido</td><td class="n">—</td><td class="n">15,394.50</td></tr>
+                </tbody>
+                <tfoot><tr><td>Totales</td><td class="n">15,394.50</td><td class="n">15,394.50</td></tr></tfoot>
+              </table>
+            </div>
+
+            <p class="trace" style="margin:16px 0 0">
+              El asiento completo, con los tres movimientos del impuesto diferido, está en
+              <button class="link-act" data-go="reportes">Reportes contables</button>.
+            </p>
+          </div>
+        </div>
+
+        <!-- SUSTENTO COLAPSABLE -->
+        <details class="fold" data-tour="sustento">
+          <summary>
+            <span class="ft">Composición de la provisión</span>
+            <span class="fsum">Cierra en 435,250.00</span>
+            <span class="car"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="fold-bd">
+            <div class="chain">
+              <div class="box"><div class="op">&nbsp;</div><div class="bl">Saldo inicial</div><div class="bn">412,850.00</div></div>
+              <div class="box"><div class="op">+</div><div class="bl">Provisión del periodo</div><div class="bn">68,420.00</div></div>
+              <div class="box neg"><div class="op">±</div><div class="bl">Ajuste actuarial (ORI)</div><div class="bn">−12,340.00</div></div>
+              <div class="box neg"><div class="op">−</div><div class="bl">Provisión no utilizada</div><div class="bn">−24,180.00</div></div>
+              <div class="box neg"><div class="op">−</div><div class="bl">Pagos del periodo</div><div class="bn">−9,500.00</div></div>
+              <div class="box tot"><div class="op">=</div><div class="bl">Saldo final</div><div class="bn">435,250.00</div></div>
+            </div>
+            <div class="cuadra">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+              Los seis cuadran entre sí.
+            </div>
+            <div class="note">
+              <b>Sobre el ajuste actuarial (ORI).</b> No suma ni resta al impuesto: no tributa.
+              Se muestra porque sin él las otras cifras no dan el saldo final, y verías un cuadro que no cuadra.
+            </div>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>
+            <span class="ft">Provisión no utilizada</span>
+            <span class="fsum">24,180.00 liberados por 3 salidas</span>
+            <span class="car"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="fold-bd">
+            <p class="trace">Se liberó lo que estaba reservado para quienes salieron sin cobrar el beneficio.</p>
+            <div class="tw">
+              <table class="gt">
+                <thead><tr><th>Concepto</th><th class="n">Valor</th><th>Efecto tributario</th></tr></thead>
+                <tbody>
+                  <tr><td>Reverso de gasto no deducible temporario</td><td class="n">18,135.00</td><td><span class="chip indigo">Se declara</span></td></tr>
+                  <tr><td>Reverso de gasto deducible</td><td class="n">6,045.00</td><td><span class="chip grey">Sin efecto</span></td></tr>
+                </tbody>
+                <tfoot><tr><td style="padding:12px 16px;font-weight:800;background:#fbfcfe">Total liberado</td><td class="n" style="padding:12px 16px;background:#fbfcfe">24,180.00</td><td style="background:#fbfcfe"></td></tr></tfoot>
+              </table>
+            </div>
+            <p class="trace" style="margin-top:14px">
+              <button class="link-act" data-go="salidas">Ver las 3 salidas que originaron esta liberación</button>
+            </p>
+          </div>
+        </details>
+
+        <details class="fold">
+          <summary>
+            <span class="ft">Impuesto diferido</span>
+            <span class="fsum">Cierra en 103,716.50</span>
+            <span class="car"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
+          </summary>
+          <div class="fold-bd">
+            <p class="trace">El vale a favor de la empresa: lo que el Estado no aceptó todavía pero aceptará más adelante.</p>
+            <div class="chain">
+              <div class="box"><div class="op">&nbsp;</div><div class="bl">Saldo inicial</div><div class="bn">92,400.00</div></div>
+              <div class="box"><div class="op">+</div><div class="bl">Generado</div><div class="bn">15,394.50</div></div>
+              <div class="box neg"><div class="op">−</div><div class="bl">Consumido</div><div class="bn">−4,078.00</div></div>
+              <div class="box tot"><div class="op">=</div><div class="bl">Saldo final</div><div class="bn">103,716.50</div></div>
+            </div>
+          </div>
+        </details>
+
+        <div class="legal">
+          La información presentada tiene carácter de declaración del cliente. Actuaria Consultores
+          realiza el cálculo actuarial sobre la base de la información entregada por la entidad y no
+          audita su veracidad.
+        </div>
+      </section>
+
+      <!-- ═══════════ PANEL 2 · SALIDAS ═══════════ -->
+      <section class="panel" id="p-salidas">
+        <div class="card">
+          <h3>Registrar una salida</h3>
+          <p class="lead">Es la única pantalla donde tú aportas información. Todo lo demás lo calculamos nosotros.</p>
+
+          <div class="grid2">
+            <div class="frow"><div class="fl">Trabajador</div><div class="fv">
+              <select id="fTrab"><option>Buscar por nombre o cédula…</option><option>Mariana Salcedo Ruiz · 1712345678</option><option>Jorge Andrade Peña · 0918273645</option><option>Elena Cabrera Mora · 1104567890</option></select>
+            </div></div>
+            <div class="frow"><div class="fl">Motivo de salida</div><div class="fv">
+              <select id="fMot"><option>Renuncia voluntaria</option><option>Despido intempestivo</option><option>Terminación de contrato</option><option>Jubilación</option></select>
+            </div></div>
+            <div class="frow"><div class="fl">Fecha de salida</div><div class="fv"><input type="date" value="2025-09-30"></div></div>
+            <div class="frow"><div class="fl">Pagó jubilación</div><div class="fv"><input id="fPagJ" type="text" value="0.00" inputmode="decimal"></div></div>
+            <div class="frow"><div class="fl">Pagó desahucio</div><div class="fv"><input id="fPagD" type="text" value="4,180.00" inputmode="decimal"></div></div>
+          </div>
+
+          <div class="note">
+            <b>Un cero no es un dato que falte.</b> Los dos beneficios se pagan por separado: alguien puede
+            cobrar el desahucio al salir y no llegar nunca a la jubilación. Si esa persona no accedió a un
+            beneficio, deja el campo en cero y lo tratamos distinto.
+          </div>
+
+          <!-- MOVIMIENTO 3 · el delta antes de confirmar -->
+          <div class="delta" data-tour="delta">
+            <h4>Qué cambia en tu cierre si confirmas</h4>
+            <div class="dl"><span>Provisión liberada</span><span class="dv up">+8,240.00</span></div>
+            <div class="dl"><span>De eso, se declara (no deducible temporario)</span><span class="dv">6,180.00</span></div>
+            <div class="dl"><span>De eso, sin efecto tributario</span><span class="dv">2,060.00</span></div>
+            <div class="dl"><span>Impuesto diferido que se consume</span><span class="dv dn">−1,545.00</span></div>
+            <div class="dl"><span>Saldo final de la provisión pasaría a</span><span class="dv">427,010.00</span></div>
+          </div>
+
+          <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap">
+            <button class="btn pri lg" id="btnConf">Confirmar salida</button>
+            <button class="btn lg" data-go="cierre">Cancelar</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Salidas registradas este año</h3>
+          <p class="lead">3 salidas · liberaron 24,180.00 en total. Estas son las que están afectando tu cierre.</p>
+          <div class="tw">
+            <table class="gt">
+              <thead><tr><th>Trabajador</th><th>Fecha</th><th>Motivo</th><th class="n">Pagó jubilación</th><th class="n">Pagó desahucio</th><th class="n">Liberó</th></tr></thead>
+              <tbody>
+                <tr><td>Rosa Villamar Chóez</td><td>14/03/2025</td><td>Renuncia voluntaria</td><td class="n">0.00</td><td class="n">3,920.00</td><td class="n">9,640.00</td></tr>
+                <tr><td>Iván Zambrano Lara</td><td>02/06/2025</td><td>Terminación de contrato</td><td class="n">0.00</td><td class="n">2,410.00</td><td class="n">6,890.00</td></tr>
+                <tr><td>Patricia Núñez Vera</td><td>21/08/2025</td><td>Despido intempestivo</td><td class="n">0.00</td><td class="n">5,145.00</td><td class="n">7,650.00</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ PANEL 3 · REPORTES CONTABLES ═══════════ -->
+      <section class="panel" id="p-reportes">
+        <div class="subtabs" id="subReportes">
+          <button class="subtab is-on" data-s="r1">Asientos completos</button>
+          <button class="subtab" data-s="r2">Conciliación tributaria</button>
+          <button class="subtab" data-s="r3">Casilleros del 101</button>
+          <button class="subtab" data-s="r4">Línea de tiempo normativa</button>
+        </div>
+
+        <div class="sp is-on" id="s-r1">
+          <div class="card">
+            <h3>Asientos de la provisión</h3>
+            <p class="lead">El movimiento de la reserva en tus libros.</p>
+            <div class="asiento">
+              <div class="asiento-hd"><b>Provisión del periodo</b><button class="btn sp copybtn" data-c="Gasto por jubilación patronal 68420.00 / Provisión 68420.00">Copiar</button></div>
+              <table class="at">
+                <thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
+                <tbody>
+                  <tr><td>Gasto por jubilación patronal</td><td class="n">68,420.00</td><td class="n">—</td></tr>
+                  <tr><td class="ind">Provisión por jubilación patronal</td><td class="n">—</td><td class="n">68,420.00</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="asiento">
+              <div class="asiento-hd"><b>Reverso por provisión no utilizada</b><button class="btn sp copybtn" data-c="Provisión 24180.00 / Recuperación de provisiones 24180.00">Copiar</button></div>
+              <table class="at">
+                <thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
+                <tbody>
+                  <tr><td>Provisión por jubilación patronal</td><td class="n">24,180.00</td><td class="n">—</td></tr>
+                  <tr><td class="ind">Recuperación de provisiones</td><td class="n">—</td><td class="n">24,180.00</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Asientos del impuesto diferido</h3>
+            <p class="lead">Los tres se muestran siempre, aunque alguno esté en cero: necesitas ver que se consideraron.</p>
+
+            <div class="asiento">
+              <div class="asiento-hd"><b>1 · Generación</b></div>
+              <table class="at"><thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
+                <tbody><tr><td>Activo por impuesto diferido</td><td class="n">15,394.50</td><td class="n">—</td></tr>
+                <tr><td class="ind">Gasto por impuesto a la renta diferido</td><td class="n">—</td><td class="n">15,394.50</td></tr></tbody></table>
+            </div>
+
+            <div class="asiento">
+              <div class="asiento-hd"><b>2 · Consumo</b></div>
+              <table class="at"><thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
+                <tbody><tr><td>Gasto por impuesto a la renta diferido</td><td class="n">4,078.00</td><td class="n">—</td></tr>
+                <tr><td class="ind">Activo por impuesto diferido</td><td class="n">—</td><td class="n">4,078.00</td></tr></tbody></table>
+            </div>
+
+            <div class="asiento">
+              <div class="asiento-hd"><b>3 · Baja por gasto no deducible permanente</b><span class="chip grey sp">En cero este año</span></div>
+              <table class="at"><thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
+                <tbody><tr><td>Gasto por impuesto a la renta diferido</td><td class="n">0.00</td><td class="n">—</td></tr>
+                <tr><td class="ind">Activo por impuesto diferido</td><td class="n">—</td><td class="n">0.00</td></tr></tbody></table>
+            </div>
+          </div>
+        </div>
+
+        <div class="sp" id="s-r2">
+          <div class="card">
+            <h3>Conciliación tributaria</h3>
+            <p class="lead">Del resultado de tus libros al resultado que declaras.</p>
+            <div class="tw">
+              <table class="gt">
+                <thead><tr><th>Concepto</th><th class="n">Valor</th><th>Efecto</th></tr></thead>
+                <tbody>
+                  <tr><td>Gasto no deducible del periodo</td><td class="n">61,578.00</td><td><span class="chip amber">Suma a la base</span></td></tr>
+                  <tr><td>Reverso de provisión no utilizada, parte deducible</td><td class="n">6,045.00</td><td><span class="chip green">Resta de la base</span></td></tr>
+                  <tr><td>Ajuste actuarial (ORI)</td><td class="n">12,340.00</td><td><span class="chip grey">No tributa</span></td></tr>
+                </tbody>
+                <tfoot><tr><td style="font-weight:800;background:#fbfcfe;padding:12px 16px">Efecto neto en la base imponible</td><td class="n" style="background:#fbfcfe;padding:12px 16px">+55,533.00</td><td style="background:#fbfcfe"></td></tr></tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="sp" id="s-r3">
+          <div class="card">
+            <h3>Casilleros del formulario 101</h3>
+            <p class="lead">Dónde va cada cifra en el formulario del Estado.</p>
+            <div class="tw">
+              <table class="gt">
+                <thead><tr><th>Casillero</th><th>Descripción</th><th class="n">Valor</th></tr></thead>
+                <tbody>
+                  <tr><td><b>7025</b></td><td>Gastos por jubilación patronal no deducibles</td><td class="n">61,578.00</td></tr>
+                  <tr><td><b>7026</b></td><td>Reverso de provisiones no utilizadas</td><td class="n">6,045.00</td></tr>
+                  <tr><td><b>6110</b></td><td>Activo por impuesto diferido</td><td class="n">103,716.50</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="legal">Los números de casillero corresponden al formulario vigente al momento del cálculo. Verifica la versión publicada por el SRI para el ejercicio que declaras.</div>
+          </div>
+        </div>
+
+        <div class="sp" id="s-r4">
+          <div class="card">
+            <h3>Línea de tiempo normativa</h3>
+            <p class="lead">Por qué la regla fue distinta en distintas épocas. Es el único lugar del producto donde vive esta explicación.</p>
+            <div class="tw">
+              <table class="gt">
+                <thead><tr><th>Periodo</th><th>Qué aceptaba el Estado</th><th>Efecto</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Hasta 2014</b></td><td>Deducible sin condición de permanencia</td><td><span class="chip green">Deducible</span></td></tr>
+                  <tr><td><b>2015 — 2019</b></td><td>Deducible solo para quienes superaban 10 años</td><td><span class="chip amber">Parcial</span></td></tr>
+                  <tr><td><b>2020 — 2021</b></td><td>No deducible; genera diferencia temporaria</td><td><span class="chip indigo">Temporario</span></td></tr>
+                  <tr><td><b>Desde 2022</b></td><td>No deducible hasta el pago efectivo del beneficio</td><td><span class="chip indigo">Temporario</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ PANEL 4 · KÁRDEX ═══════════ -->
+      <section class="panel" id="p-kardex">
+        <div class="subtabs" id="subKardex">
+          <button class="subtab is-on" data-s="k1">Vista global</button>
+          <button class="subtab" data-s="k2">Ficha del trabajador</button>
+        </div>
+
+        <div class="sp is-on" id="s-k1">
+          <div class="card">
+            <h3>Todos los trabajadores</h3>
+            <p class="lead">El respaldo que le muestras al auditor cuando pregunta de dónde sale el total.</p>
+            <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+              <button class="btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 5h16l-6 7v6l-4 2v-8z"/></svg>Filtrar</button>
+              <button class="btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v13"/><path d="M7 12l5 5 5-5"/><path d="M4 21h16"/></svg>Exportar</button>
+            </div>
+            <div class="tw">
+              <table class="gt">
+                <thead><tr><th>Trabajador</th><th>Ingreso</th><th class="n">Años</th><th class="n">Provisión acumulada</th><th class="n">Del periodo</th><th>Estado</th></tr></thead>
+                <tbody>
+                  <tr><td>Mariana Salcedo Ruiz</td><td>02/2001</td><td class="n">24.6</td><td class="n">78,410.00</td><td class="n">6,120.00</td><td><span class="chip amber">Cerca de jubilar</span></td></tr>
+                  <tr><td>Jorge Andrade Peña</td><td>07/1998</td><td class="n">27.2</td><td class="n">96,240.00</td><td class="n">4,880.00</td><td><span class="chip green">Con derecho</span></td></tr>
+                  <tr><td>Elena Cabrera Mora</td><td>11/2012</td><td class="n">12.9</td><td class="n">31,570.00</td><td class="n">5,340.00</td><td><span class="chip grey">Activo</span></td></tr>
+                  <tr><td>Luis Paredes Ycaza</td><td>03/2018</td><td class="n">7.5</td><td class="n">14,220.00</td><td class="n">3,910.00</td><td><span class="chip grey">Activo</span></td></tr>
+                  <tr><td>Carmen Ortega Bravo</td><td>09/2009</td><td class="n">16.0</td><td class="n">42,880.00</td><td class="n">5,760.00</td><td><span class="chip grey">Activo</span></td></tr>
+                </tbody>
+                <tfoot><tr><td colspan="3" style="font-weight:800;background:#fbfcfe;padding:12px 16px">Total · 142 trabajadores</td><td class="n" style="background:#fbfcfe;padding:12px 16px">435,250.00</td><td class="n" style="background:#fbfcfe;padding:12px 16px">68,420.00</td><td style="background:#fbfcfe"></td></tr></tfoot>
+              </table>
+            </div>
+            <p class="trace" style="margin-top:14px">Este total es exactamente el saldo final de tu cierre. <button class="link-act" data-go="cierre">Volver a Mi cierre</button></p>
+          </div>
+        </div>
+
+        <div class="sp" id="s-k2">
+          <div class="card">
+            <h3>Mariana Salcedo Ruiz</h3>
+            <p class="lead">Cédula 1712345678 · ingresó en febrero de 2001 · 24.6 años de servicio</p>
+            <div class="tw">
+              <table class="gt">
+                <thead><tr><th>Ejercicio</th><th class="n">Provisión del año</th><th class="n">Acumulado</th><th>Tratamiento</th></tr></thead>
+                <tbody>
+                  <tr><td>2022</td><td class="n">5,340.00</td><td class="n">60,830.00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
+                  <tr><td>2023</td><td class="n">5,720.00</td><td class="n">66,550.00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
+                  <tr><td>2024</td><td class="n">5,740.00</td><td class="n">72,290.00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
+                  <tr><td>2025</td><td class="n">6,120.00</td><td class="n">78,410.00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="delta" style="margin-top:18px">
+              <h4>Si esta persona saliera hoy</h4>
+              <div class="dl"><span>Se liberaría</span><span class="dv">78,410.00</span></div>
+              <div class="dl"><span>De eso, se declara</span><span class="dv">58,807.50</span></div>
+              <div class="dl"><span>Impuesto diferido que se consumiría</span><span class="dv dn">−14,701.87</span></div>
+            </div>
+            <div class="note">
+              Esta proyección no se muestra para quienes <b>ya tienen derecho a la pensión</b>: en ese caso
+              no es una hipótesis, es una obligación en firme.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ PANEL 5 · ANÁLISIS ═══════════ -->
+      <section class="panel" id="p-analisis">
+        <div class="subtabs" id="subAnalisis">
+          <button class="subtab is-on" data-s="a1">Evolución de la provisión</button>
+          <button class="subtab" data-s="a2">Evolución del impuesto diferido</button>
+        </div>
+
+        <div class="sp is-on" id="s-a1">
+          <div class="card">
+            <h3>Provisión acumulada, año por año</h3>
+            <p class="lead">Cómo viene creciendo tu pasivo laboral.</p>
+            <div class="bars">
+              <div class="bar"><span class="bv">286,400</span><div class="btrack"><div class="bcol" style="height:44%"></div></div><span class="bx">2021</span></div>
+              <div class="bar"><span class="bv">324,180</span><div class="btrack"><div class="bcol" style="height:56%"></div></div><span class="bx">2022</span></div>
+              <div class="bar"><span class="bv">361,920</span><div class="btrack"><div class="bcol" style="height:68%"></div></div><span class="bx">2023</span></div>
+              <div class="bar"><span class="bv">412,850</span><div class="btrack"><div class="bcol" style="height:84%"></div></div><span class="bx">2024</span></div>
+              <div class="bar"><span class="bv">435,250</span><div class="btrack"><div class="bcol" style="height:100%"></div></div><span class="bx">2025</span></div>
+            </div>
+            <p class="trace" style="margin-top:16px">
+              El detalle persona por persona vive en <button class="link-act" data-go="kardex">Kárdex</button>,
+              para que no tengas que buscarlo en dos lugares.
+            </p>
+          </div>
+        </div>
+
+        <div class="sp" id="s-a2">
+          <div class="card">
+            <h3>Impuesto diferido acumulado</h3>
+            <p class="lead">El vale a favor, año por año.</p>
+            <div class="bars">
+              <div class="bar"><span class="bv">58,900</span><div class="btrack"><div class="bcol" style="height:40%"></div></div><span class="bx">2021</span></div>
+              <div class="bar"><span class="bv">69,340</span><div class="btrack"><div class="bcol" style="height:52%"></div></div><span class="bx">2022</span></div>
+              <div class="bar"><span class="bv">80,120</span><div class="btrack"><div class="bcol" style="height:66%"></div></div><span class="bx">2023</span></div>
+              <div class="bar"><span class="bv">92,400</span><div class="btrack"><div class="bcol" style="height:82%"></div></div><span class="bx">2024</span></div>
+              <div class="bar"><span class="bv">103,716</span><div class="btrack"><div class="bcol" style="height:100%"></div></div><span class="bx">2025</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /shell -->
+
+<button class="tour-btn" id="tourBtn">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3l2.4 5.6L20 10l-4.4 3.6L17 20l-5-3-5 3 1.4-6.4L4 10l5.6-1.4z"/></svg>
+  Tour guiado
+</button>
+<button class="fab" aria-label="WhatsApp"><svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1-.3-.1-.5-.2-.7.1-.2.3-.7 1-.9 1.2-.2.2-.3.2-.6.1-1.7-.9-2.9-1.6-4-3.6-.3-.5.3-.5.8-1.5.1-.2 0-.4 0-.5s-.7-1.6-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.9.8 2.6.9 3.5.8.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.5-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.4 1.3 4.9L2 22l5.3-1.3c1.4.8 3 1.2 4.7 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3.1.8.8-3-.2-.3c-.8-1.3-1.3-2.8-1.3-4.4 0-4.5 3.7-8.2 8.2-8.2s8.2 3.7 8.2 8.2-3.6 8.3-8.1 8.3z"/></svg></button>
+
+<div id="tourSpot"></div>
+<div id="tourPop" role="dialog" aria-modal="true">
+  <h4 id="tpT"></h4>
+  <p id="tpD"></p>
+  <div class="tp-foot">
+    <span class="tp-dots" id="tpDots"></span>
+    <span class="tp-btns">
+      <button class="btn" id="tpSkip">Saltar</button>
+      <button class="btn" id="tpPrev">Anterior</button>
+      <button class="btn pri" id="tpNext">Siguiente</button>
+    </span>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+  var $  = function(s,c){return (c||document).querySelector(s)};
+  var $$ = function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+
+  /* ── Toast ── */
+  var toast=$('#toast'), tmr;
+  function say(m){toast.textContent=m;toast.classList.add('on');clearTimeout(tmr);tmr=setTimeout(function(){toast.classList.remove('on')},2100)}
+
+  /* ── Navegación entre paneles ── */
+  function go(name){
+    $$('.tab').forEach(function(t){t.classList.toggle('is-on',t.dataset.p===name)});
+    $$('.panel').forEach(function(p){p.classList.toggle('is-on',p.id==='p-'+name)});
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  $$('.tab').forEach(function(t){t.addEventListener('click',function(){go(t.dataset.p)})});
+  document.addEventListener('click',function(e){
+    var el=e.target.closest('[data-go]');
+    if(el){e.preventDefault();go(el.dataset.go)}
+  });
+
+  /* ── Subtabs ── */
+  ['subReportes','subKardex','subAnalisis'].forEach(function(id){
+    var wrap=document.getElementById(id); if(!wrap) return;
+    wrap.addEventListener('click',function(e){
+      var b=e.target.closest('.subtab'); if(!b) return;
+      $$('.subtab',wrap).forEach(function(x){x.classList.toggle('is-on',x===b)});
+      var panel=wrap.parentElement;
+      $$('.sp',panel).forEach(function(p){p.classList.toggle('is-on',p.id==='s-'+b.dataset.s)});
+    });
+  });
+
+  /* ── Copiar ── */
+  function copy(txt,msg){
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){say(msg)},function(){say(msg)})}
+    else{say(msg)}
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('.copybtn');
+    if(b){copy(b.dataset.c||'','Asiento copiado al portapapeles')}
+  });
+  $('#copyAll').addEventListener('click',function(){
+    copy('Provision jubilacion patronal 68420.00 | Impuesto diferido 15394.50','Asiento completo copiado');
+  });
+
+  /* ── Puerta de entrada: se puede cerrar, vuelve cada ejercicio ── */
+  var door=$('#door');
+  $('#doorX').addEventListener('click',function(){
+    door.style.display='none';
+    say('Volverá a aparecer en el próximo ejercicio');
+  });
+  $('#selEj').addEventListener('change',function(){
+    door.style.display='';
+    var cur = this.value==='2025';
+    $('#estadoV').innerHTML = cur
+      ? '<span class="chip amber"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Preliminar</span>'
+      : '<span class="chip green"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Definitivo</span>';
+    say('Ejercicio '+this.value+' cargado');
+  });
+
+  /* ── Confirmar salida: muestra el efecto ── */
+  $('#btnConf').addEventListener('click',function(){
+    var n=$('#nSal'); n.textContent=String(parseInt(n.textContent,10)+1);
+    say('Salida registrada · tu cierre se actualizó');
+    setTimeout(function(){go('cierre')},700);
+  });
+
+  /* ══ TOUR (patrón spotlight de ACTAF-5236) ══ */
+  var steps=[
+    {sel:null,t:'Bienvenido al Control tributario',
+     d:'Cuatro pasos para que sepas qué hay aquí. Sabemos que entras una vez al año: esto no da por hecho que recuerdes la última vez.'},
+    {sel:'[data-tour=estado]',t:'1 · En qué estado está tu cierre',
+     d:'Ejercicio, beneficio y si las cifras son preliminares o definitivas. A la derecha, cuántas salidas registraste: son las que están moviendo tus números.'},
+    {sel:'[data-tour=respuesta]',t:'2 · La respuesta, primero',
+     d:'La cifra del periodo y el asiento que tienes que escribir, arriba de todo y con botón de copiar. Antes estaba al final, después de tres bloques de contexto.'},
+    {sel:'[data-tour=sustento]',t:'3 · El sustento, cuando lo necesites',
+     d:'La composición, la provisión liberada y el impuesto diferido quedan plegados con su resumen a la vista. Se abren si quieres defender la cifra.'},
+    {sel:'[data-tour=puerta]',t:'4 · Las otras tres preguntas',
+     d:'De dónde sale, cómo se declara y cómo evoluciona. Cada una tiene su destino. Este panel vuelve cada ejercicio nuevo.'}
+  ];
+  var i=0, spot=$('#tourSpot'), pop=$('#tourPop');
+
+  function place(){
+    var s=steps[i];
+    $('#tpT').textContent=s.t; $('#tpD').textContent=s.d;
+    $('#tpDots').textContent=(i+1)+' de '+steps.length;
+    $('#tpPrev').style.display=i?'':'none';
+    $('#tpNext').textContent=(i===steps.length-1)?'Finalizar':'Siguiente';
+    pop.style.display='block';
+
+    var el=s.sel?$(s.sel):null;
+    if(!el){
+      spot.style.display='none';
+      pop.style.left='50%'; pop.style.top='50%';
+      pop.style.transform='translate(-50%,-50%)';
+      return;
+    }
+    pop.style.transform='none';
+    el.scrollIntoView({block:'center',behavior:'smooth'});
+    setTimeout(function(){
+      var r=el.getBoundingClientRect(), pad=8;
+      spot.style.display='block';
+      spot.style.left=(r.left-pad)+'px';
+      spot.style.top=(r.top-pad)+'px';
+      spot.style.width=(r.width+pad*2)+'px';
+      spot.style.height=(r.height+pad*2)+'px';
+      var ph=pop.offsetHeight, pw=pop.offsetWidth;
+      var top=r.bottom+16;
+      if(top+ph>window.innerHeight-12) top=Math.max(12,r.top-ph-16);
+      var left=Math.min(Math.max(12,r.left),window.innerWidth-pw-12);
+      pop.style.top=top+'px'; pop.style.left=left+'px';
+    },320);
+  }
+  function open(){i=0;go('cierre');door.style.display='';setTimeout(place,260)}
+  function close(){spot.style.display='none';pop.style.display='none'}
+
+  $('#tourBtn').addEventListener('click',open);
+  $('#tpSkip').addEventListener('click',close);
+  $('#tpPrev').addEventListener('click',function(){if(i>0){i--;place()}});
+  $('#tpNext').addEventListener('click',function(){ if(i<steps.length-1){i++;place()} else {close();say('Listo. El tour queda en el botón de abajo.')} });
+  document.addEventListener('keydown',function(e){
+    if(pop.style.display!=='block') return;
+    if(e.key==='Escape') close();
+    if(e.key==='ArrowRight') $('#tpNext').click();
+    if(e.key==='ArrowLeft')  $('#tpPrev').click();
+  });
+  window.addEventListener('resize',function(){if(pop.style.display==='block') place()});
+
+  setTimeout(open,700);
+})();
+</script>
+</body>
+</html>
