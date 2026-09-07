@@ -651,6 +651,27 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
 .emptybox b{display:block;color:var(--navy)}
 .chip.red{background:var(--red-bg);color:var(--red-ink);border-color:var(--red-bd)}
 
+/* ─── 22c · Kárdex — histórico por persona (empatado al requerimiento) ──
+   El requerimiento agrupa las columnas en tres vistas (Provisión ·
+   Movimientos · Impuesto diferido) con un control segmentado: se reusa el
+   patrón .subtabs. El beneficio activo lo gobierna el selector de Mi cierre
+   y aquí tiene su gemelo visible para que el cambio sea descubrible. */
+.khead{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:16px 0 12px}
+.khead .kt{margin-right:auto;min-width:0}
+.khead .kt b{display:block;font-size:var(--font-size-small);color:var(--navy);font-weight:800}
+.khead .kt small{color:var(--color-text-weak);font-size:var(--font-size-mini)}
+.klab{display:block;font-size:var(--font-size-micro);font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--color-text-weak);margin:0 0 5px}
+/* Los ⓘ son botones (tap en táctil, foco con teclado): al pulsarlos la
+   definición sale por el toast — title solo cubre hover de escritorio. */
+.hint{cursor:help;color:var(--color-text-weak);font-size:10px;font-weight:800;user-select:none;
+  margin-left:3px;background:none;border:0;padding:0;line-height:inherit}
+.hint:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;border-radius:4px}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:7px;
+  vertical-align:1px;background:var(--green-500)}
+.dot.ndt{background:var(--indigo)}
+.gt td.negv{color:var(--red-ink)}
+
 /* ─── 23 · Gráficos — barras neu en pozos ────────────────────────────── */
 /* Cada año es un pozo hundido de altura completa (la escala visible) con el
    relleno como píldora elevada adentro; el año vigente lleva el gradiente
@@ -959,13 +980,18 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
               Copiar asiento completo
             </button>
-            <span class="sub">Ejercicio 2025 · Jubilación patronal · cifras preliminares</span>
+            <span class="sub" id="ansSub">Ejercicio 2025 · Jubilación patronal · cifras preliminares</span>
           </div>
 
           <div class="answer-bd">
             <div class="figure">
-              <span class="num">68.420,00</span>
+              <span class="num" id="ansNum">68.420,00</span>
               <span class="lbl">provisión del periodo · USD</span>
+            </div>
+            <div class="note" id="benNote" hidden>
+              <b>Cifras de desahucio ilustrativas · PROVISIONAL.</b> La consolidación fina con
+              Salidas y Reportes (la porción de cada beneficio en liberaciones y en el impuesto
+              diferido consumido) se define con el equipo técnico.
             </div>
             <p class="trace">
               Esta es la cifra que va a tus libros este año.
@@ -975,41 +1001,41 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
 
             <div class="asiento">
               <div class="asiento-hd">
-                <b>1 · Provisión por jubilación patronal</b>
-                <button class="btn sp copybtn" data-c="Gasto por jubilación patronal 68420.00 / Provisión por jubilación patronal 68420.00">
+                <b id="as1T">1 · Provisión por jubilación patronal</b>
+                <button class="btn sp copybtn" id="as1C" data-c="Gasto por jubilación patronal 68420.00 / Provisión por jubilación patronal 68420.00">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>Copiar
                 </button>
               </div>
               <table class="at">
                 <thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
-                <tbody>
+                <tbody id="as1B">
                   <tr><td>Gasto por jubilación patronal</td><td class="n">68.420,00</td><td class="n">—</td></tr>
                   <tr><td class="ind">Provisión por jubilación patronal</td><td class="n">—</td><td class="n">68.420,00</td></tr>
                 </tbody>
-                <tfoot><tr><td>Totales</td><td class="n">68.420,00</td><td class="n">68.420,00</td></tr></tfoot>
+                <tfoot id="as1F"><tr><td>Totales</td><td class="n">68.420,00</td><td class="n">68.420,00</td></tr></tfoot>
               </table>
             </div>
 
             <div class="asiento">
               <div class="asiento-hd">
                 <b>2 · Impuesto diferido generado</b>
-                <button class="btn sp copybtn" data-c="Activo por impuesto diferido 15394.50 / Gasto por impuesto a la renta diferido 15394.50">
+                <button class="btn sp copybtn" id="as2C" data-c="Activo por impuesto diferido 15394.50 / Gasto por impuesto a la renta diferido 15394.50">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>Copiar
                 </button>
               </div>
               <table class="at">
                 <thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
-                <tbody>
+                <tbody id="as2B">
                   <tr><td>Activo por impuesto diferido</td><td class="n">15.394,50</td><td class="n">—</td></tr>
                   <tr><td class="ind">Gasto por impuesto a la renta diferido</td><td class="n">—</td><td class="n">15.394,50</td></tr>
                 </tbody>
-                <tfoot><tr><td>Totales</td><td class="n">15.394,50</td><td class="n">15.394,50</td></tr></tfoot>
+                <tfoot id="as2F"><tr><td>Totales</td><td class="n">15.394,50</td><td class="n">15.394,50</td></tr></tfoot>
               </table>
             </div>
 
             <p class="trace" style="margin:16px 0 0">
               El asiento completo, con los tres movimientos del impuesto diferido, está en
-              <button class="link-act" data-go="reportes">Reportes contables</button>.
+              <button class="link-act" data-go="reportes">Reportes contables</button><span id="repXtra"></span>.
             </p>
           </div>
         </div>
@@ -1018,11 +1044,11 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
         <details class="fold" data-tour="sustento">
           <summary>
             <span class="ft">Composición de la provisión</span>
-            <span class="fsum">Cierra en 435.250,00</span>
+            <span class="fsum" id="fsComp">Cierra en 435.250,00</span>
             <span class="car"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
           </summary>
           <div class="fold-bd">
-            <div class="chain">
+            <div class="chain" id="chainComp">
               <div class="box"><div class="op">&nbsp;</div><div class="bl">Saldo inicial</div><div class="bn">412.850,00</div></div>
               <div class="box"><div class="op">+</div><div class="bl">Provisión del periodo</div><div class="bn">68.420,00</div></div>
               <div class="box neg"><div class="op">±</div><div class="bl">Ajuste actuarial (ORI)</div><div class="bn">−12.340,00</div></div>
@@ -1044,7 +1070,7 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
         <details class="fold">
           <summary>
             <span class="ft">Provisión no utilizada</span>
-            <span class="fsum">24.180,00 liberados por 3 salidas</span>
+            <span class="fsum" id="fsNoU">24.180,00 liberados por 3 salidas</span>
             <span class="car"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
           </summary>
           <div class="fold-bd">
@@ -1053,14 +1079,14 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <table class="gt">
                 <thead><tr><th>Concepto</th><th class="n">Valor</th><th>Efecto tributario</th></tr></thead>
                 <tbody>
-                  <tr><td>Reverso de gasto no deducible temporario</td><td class="n">18.135,00</td><td><span class="chip indigo">Se declara</span></td></tr>
-                  <tr><td>Reverso de gasto deducible</td><td class="n">6.045,00</td><td><span class="chip grey">Sin efecto</span></td></tr>
+                  <tr><td>Reverso de gasto no deducible temporario</td><td class="n" id="noU1">18.135,00</td><td><span class="chip indigo">Se declara</span></td></tr>
+                  <tr><td>Reverso de gasto deducible</td><td class="n" id="noU2">6.045,00</td><td><span class="chip grey">Sin efecto</span></td></tr>
                 </tbody>
-                <tfoot><tr><td style="padding:12px 16px;font-weight:800;background:#fbfcfe">Total liberado</td><td class="n" style="padding:12px 16px;background:#fbfcfe">24.180,00</td><td style="background:#fbfcfe"></td></tr></tfoot>
+                <tfoot><tr><td style="padding:12px 16px;font-weight:800;background:#fbfcfe">Total liberado</td><td class="n" id="noUT" style="padding:12px 16px;background:#fbfcfe">24.180,00</td><td style="background:#fbfcfe"></td></tr></tfoot>
               </table>
             </div>
             <p class="trace" style="margin-top:14px">
-              <button class="link-act" data-go="salidas">Ver las 3 salidas que originaron esta liberación</button>
+              <button class="link-act" data-go="salidas">Ver las 3 salidas que originaron esta liberación</button><span id="noUXtra"></span>
             </p>
           </div>
         </details>
@@ -1068,12 +1094,12 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
         <details class="fold">
           <summary>
             <span class="ft">Impuesto diferido</span>
-            <span class="fsum">Cierra en 103.716,50</span>
+            <span class="fsum" id="fsAid">Cierra en 103.716,50</span>
             <span class="car"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
           </summary>
           <div class="fold-bd">
             <p class="trace">El vale a favor de la empresa: lo que el Estado no aceptó todavía pero aceptará más adelante.</p>
-            <div class="chain">
+            <div class="chain" id="chainAid">
               <div class="box"><div class="op">&nbsp;</div><div class="bl">Saldo inicial</div><div class="bn">92.400,00</div></div>
               <div class="box"><div class="op">+</div><div class="bl">Generado</div><div class="bn">15.394,50</div></div>
               <div class="box neg"><div class="op">−</div><div class="bl">Consumido</div><div class="bn">−4.078,00</div></div>
@@ -1105,6 +1131,7 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <p class="lead" style="margin:0" id="salResumen"></p>
             </div>
             <span class="chip grey">Filtro aplicado: diciembre 2025</span>
+            <span class="chip grey">Liberaciones de jubilación patronal</span>
           </div>
           <div class="tw" id="salTablaWrap">
             <table class="gt">
@@ -1235,6 +1262,10 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
 
       <!-- ═══════════ PANEL 3 · REPORTES CONTABLES ═══════════ -->
       <section class="panel" id="p-reportes">
+        <div class="note" style="margin-top:0">
+          Esta vista muestra la declaración con las cifras de <b>jubilación patronal</b>. En esta
+          maqueta, el selector de beneficio de Mi cierre aplica a Mi cierre, Kárdex y Análisis.
+        </div>
         <div class="subtabs" id="subReportes">
           <button class="subtab is-on" data-s="r1">Asientos completos</button>
           <button class="subtab" data-s="r2">Conciliación tributaria</button>
@@ -1359,7 +1390,7 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
 
         <div class="sp is-on" id="s-k1">
           <div class="card">
-            <h3>Todos los trabajadores</h3>
+            <h3>Todos los trabajadores <span class="chip grey" id="kgBen" style="vertical-align:3px">Jubilación patronal</span> <span class="chip amber" id="kgProv" style="vertical-align:3px" hidden>PROVISIONAL · cifras ilustrativas</span></h3>
             <p class="lead">El respaldo que le muestras al auditor cuando pregunta de dónde sale el total.</p>
             <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
               <button class="btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 5h16l-6 7v6l-4 2v-8z"/></svg>Filtrar</button>
@@ -1369,13 +1400,13 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <table class="gt">
                 <thead><tr><th>Trabajador</th><th>Ingreso</th><th class="n">Años</th><th class="n">Provisión acumulada</th><th class="n">Del periodo</th><th>Estado</th></tr></thead>
                 <tbody>
-                  <tr><td>Mariana Salcedo Ruiz</td><td>02/2001</td><td class="n">24.6</td><td class="n">78.410,00</td><td class="n">6.120,00</td><td><span class="chip amber">Cerca de jubilar</span></td></tr>
-                  <tr><td>Jorge Andrade Peña</td><td>07/1998</td><td class="n">27.2</td><td class="n">96.240,00</td><td class="n">4.880,00</td><td><span class="chip green">Con derecho</span></td></tr>
-                  <tr><td>Elena Cabrera Mora</td><td>11/2012</td><td class="n">12.9</td><td class="n">31.570,00</td><td class="n">5.340,00</td><td><span class="chip grey">Activo</span></td></tr>
-                  <tr><td>Luis Paredes Ycaza</td><td>03/2018</td><td class="n">7.5</td><td class="n">14.220,00</td><td class="n">3.910,00</td><td><span class="chip grey">Activo</span></td></tr>
-                  <tr><td>Carmen Ortega Bravo</td><td>09/2009</td><td class="n">16.0</td><td class="n">42.880,00</td><td class="n">5.760,00</td><td><span class="chip grey">Activo</span></td></tr>
+                  <tr><td>Mariana Salcedo Ruiz</td><td>02/2001</td><td class="n">24,6</td><td class="n" data-j="78.410,00" data-d="6.940,00">78.410,00</td><td class="n" data-j="6.120,00" data-d="512,00">6.120,00</td><td><span class="chip amber">Cerca de jubilar</span></td></tr>
+                  <tr><td>Jorge Andrade Peña</td><td>07/1998</td><td class="n">27,2</td><td class="n" data-j="96.240,00" data-d="7.850,00">96.240,00</td><td class="n" data-j="4.880,00" data-d="402,00">4.880,00</td><td><span class="chip green">Con derecho</span></td></tr>
+                  <tr><td>Elena Cabrera Mora</td><td>11/2012</td><td class="n">12,9</td><td class="n" data-j="31.570,00" data-d="4.120,00">31.570,00</td><td class="n" data-j="5.340,00" data-d="486,00">5.340,00</td><td><span class="chip grey">Activo</span></td></tr>
+                  <tr><td>Luis Paredes Ycaza</td><td>03/2018</td><td class="n">7,5</td><td class="n" data-j="14.220,00" data-d="1.980,00">14.220,00</td><td class="n" data-j="3.910,00" data-d="391,00">3.910,00</td><td><span class="chip grey">Activo</span></td></tr>
+                  <tr><td>Carmen Ortega Bravo</td><td>09/2009</td><td class="n">16,0</td><td class="n" data-j="42.880,00" data-d="5.310,00">42.880,00</td><td class="n" data-j="5.760,00" data-d="470,00">5.760,00</td><td><span class="chip grey">Activo</span></td></tr>
                 </tbody>
-                <tfoot><tr><td colspan="3" style="font-weight:800;background:#fbfcfe;padding:12px 16px">Total · 142 trabajadores</td><td class="n" style="background:#fbfcfe;padding:12px 16px">435.250,00</td><td class="n" style="background:#fbfcfe;padding:12px 16px">68.420,00</td><td style="background:#fbfcfe"></td></tr></tfoot>
+                <tfoot><tr><td colspan="3" style="font-weight:800;background:#fbfcfe;padding:12px 16px">Total · 142 trabajadores</td><td class="n" data-j="435.250,00" data-d="39.750,00" style="background:#fbfcfe;padding:12px 16px">435.250,00</td><td class="n" data-j="68.420,00" data-d="6.180,00" style="background:#fbfcfe;padding:12px 16px">68.420,00</td><td style="background:#fbfcfe"></td></tr></tfoot>
               </table>
             </div>
             <p class="trace" style="margin-top:14px">Este total es exactamente el saldo final de tu cierre. <button class="link-act" data-go="cierre">Volver a Mi cierre</button></p>
@@ -1385,27 +1416,58 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
         <div class="sp" id="s-k2">
           <div class="card">
             <h3>Mariana Salcedo Ruiz</h3>
-            <p class="lead">Cédula 1712345678 · ingresó en febrero de 2001 · 24.6 años de servicio</p>
+            <p class="lead">Cédula 1712345678 · ingresó en febrero de 2001 · 24,6 años de servicio</p>
+
+            <div>
+              <small class="klab">Beneficio · aplica a todo el módulo</small>
+              <div class="subtabs" style="margin-bottom:0" id="kbTabs" role="group" aria-label="Beneficio">
+                <button class="subtab is-on" data-b="jub">Jubilación patronal</button>
+                <button class="subtab" data-b="des">Desahucio</button>
+              </div>
+            </div>
+
+            <div class="khead">
+              <div class="kt">
+                <b>Histórico de provisión e impuesto diferido</b>
+                <small>Historia 2001–2025 · valores en US$</small>
+              </div>
+              <div>
+                <small class="klab">Vista</small>
+                <div class="subtabs" style="margin-bottom:0" id="kvTabs" role="group" aria-label="Grupo de columnas">
+                  <button class="subtab is-on" data-v="prov">Provisión</button>
+                  <button class="subtab" data-v="mov">Movimientos</button>
+                  <button class="subtab" data-v="aid">Impuesto diferido</button>
+                </div>
+              </div>
+              <button class="btn" id="kExp">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3v13"/><path d="M7 12l5 5 5-5"/><path d="M4 21h16"/></svg>
+                Exportar a Excel
+              </button>
+            </div>
+
             <div class="tw">
-              <table class="gt">
-                <thead><tr><th>Ejercicio</th><th class="n">Provisión del año</th><th class="n">Acumulado</th><th>Tratamiento</th></tr></thead>
-                <tbody>
-                  <tr><td>2022</td><td class="n">5.340,00</td><td class="n">60.830,00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
-                  <tr><td>2023</td><td class="n">5.720,00</td><td class="n">66.550,00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
-                  <tr><td>2024</td><td class="n">5.740,00</td><td class="n">72.290,00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
-                  <tr><td>2025</td><td class="n">6.120,00</td><td class="n">78.410,00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
-                </tbody>
+              <table class="gt" id="kdxT">
+                <thead id="kdxH"></thead>
+                <tbody id="kdxB"></tbody>
+                <tfoot id="kdxF"></tfoot>
               </table>
             </div>
+            <p class="trace" id="kdxNote" style="margin-top:12px"></p>
+
             <div class="delta" style="margin-top:18px">
               <h4>Si esta persona saliera hoy</h4>
-              <div class="dl"><span>Se liberaría</span><span class="dv">78.410,00</span></div>
-              <div class="dl"><span>De eso, se declara</span><span class="dv">58.807,50</span></div>
-              <div class="dl"><span>Impuesto diferido que se consumiría</span><span class="dv dn">−14.701,87</span></div>
+              <div class="dl"><span>Se liberaría</span><span class="dv" id="kdL1">78.410,00</span></div>
+              <div class="dl"><span>De eso, se declara</span><span class="dv" id="kdL2">58.807,50</span></div>
+              <div class="dl"><span>Impuesto diferido que se consumiría</span><span class="dv dn" id="kdL3">−14.701,87</span></div>
             </div>
             <div class="note">
               Esta proyección no se muestra para quienes <b>ya tienen derecho a la pensión</b>: en ese caso
               no es una hipótesis, es una obligación en firme.
+            </div>
+            <div class="note" id="kBenNote" hidden>
+              <b>Cifras de desahucio ilustrativas · PROVISIONAL.</b> El histórico de desahucio se
+              genera con la misma mecánica que el de jubilación; los valores finos los entrega el
+              estudio actuarial.
             </div>
           </div>
         </div>
@@ -1423,9 +1485,9 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
             <h3>Provisión acumulada, año por año</h3>
             <p class="lead">Cómo viene creciendo tu pasivo laboral.</p>
             <div class="nc-kpi">
-              <span class="knum">$435.250</span>
-              <span class="klbl">al cierre 2025 · jubilación patronal</span>
-              <span class="kchips"><span class="chip">+$22.400 vs 2024</span><span class="chip">+52% en 5 años</span></span>
+              <span class="knum" id="kpP1">$435.250</span>
+              <span class="klbl" id="kpP2">al cierre 2025 · jubilación patronal</span>
+              <span class="kchips" id="kpP3"><span class="chip">+$22.400 vs 2024</span><span class="chip">+52% en 5 años</span></span>
             </div>
             <div class="nc-bars" id="chProv" role="img"
                  data-serie="Provisión acumulada por año"></div>
@@ -1441,9 +1503,9 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
             <h3>Impuesto diferido acumulado</h3>
             <p class="lead">El vale a favor, año por año.</p>
             <div class="nc-kpi">
-              <span class="knum">$103.716</span>
-              <span class="klbl">a tu favor al cierre 2025</span>
-              <span class="kchips"><span class="chip indigo">+$11.316 vs 2024</span><span class="chip indigo">+76% en 5 años</span></span>
+              <span class="knum" id="kpA1">$103.716</span>
+              <span class="klbl" id="kpA2">a tu favor al cierre 2025 · jubilación patronal</span>
+              <span class="kchips" id="kpA3"><span class="chip indigo">+$11.316 vs 2024</span><span class="chip indigo">+76% en 5 años</span></span>
             </div>
             <div class="nc-bars" id="chAid" role="img"
                  data-serie="Impuesto diferido acumulado por año"></div>
@@ -1520,7 +1582,8 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
     if(b){copy(b.dataset.c||'','Asiento copiado al portapapeles')}
   });
   $('#copyAll').addEventListener('click',function(){
-    copy('Provision jubilacion patronal 68420.00 | Impuesto diferido 15394.50','Asiento completo copiado');
+    /* Lee los data-c vigentes: así copia el beneficio activo, no uno fijo. */
+    copy($('#as1C').dataset.c+' | '+$('#as2C').dataset.c,'Asiento completo copiado');
   });
 
   /* ── Puerta de entrada: se puede cerrar, vuelve cada ejercicio ── */
@@ -1546,12 +1609,12 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
   var TASA=0.25;
   var PROV_GRUPO=475000.00;   /* jubilación 435.250,00 + desahucio 39.750,00 */
   var PADRON={
-    ms:{n:'Mariana Salcedo Ruiz', ci:'1712345678', ts:'24.6 años', st:'Cerca de jubilar', pj:78410.00, pd:6940.00, ded:20, tmp:70, per:10},
-    ja:{n:'Jorge Andrade Peña',   ci:'0918273645', ts:'27.2 años', st:'Con derecho',      pj:96240.00, pd:7850.00, ded:25, tmp:65, per:10},
-    ec:{n:'Elena Cabrera Mora',   ci:'1104567890', ts:'12.9 años', st:'Activo',           pj:31570.00, pd:4120.00, ded:30, tmp:60, per:10},
-    lp:{n:'Luis Paredes Ycaza',   ci:'0923456789', ts:'7.5 años',  st:'Activo',           pj:14220.00, pd:1980.00, ded:30, tmp:55, per:15},
-    co:{n:'Carmen Ortega Bravo',  ci:'1723456789', ts:'16.0 años', st:'Activo',           pj:42880.00, pd:5310.00, ded:28, tmp:62, per:10},
-    am:{n:'Andrés Mite Solano',   ci:'0956781234', ts:'3.2 años',  st:'Activo',           pj:0, pd:0, ded:0, tmp:0, per:0}
+    ms:{n:'Mariana Salcedo Ruiz', ci:'1712345678', ts:'24,6 años', st:'Cerca de jubilar', pj:78410.00, pd:6940.00, ded:20, tmp:70, per:10},
+    ja:{n:'Jorge Andrade Peña',   ci:'0918273645', ts:'27,2 años', st:'Con derecho',      pj:96240.00, pd:7850.00, ded:25, tmp:65, per:10},
+    ec:{n:'Elena Cabrera Mora',   ci:'1104567890', ts:'12,9 años', st:'Activo',           pj:31570.00, pd:4120.00, ded:30, tmp:60, per:10},
+    lp:{n:'Luis Paredes Ycaza',   ci:'0923456789', ts:'7,5 años',  st:'Activo',           pj:14220.00, pd:1980.00, ded:30, tmp:55, per:15},
+    co:{n:'Carmen Ortega Bravo',  ci:'1723456789', ts:'16,0 años', st:'Activo',           pj:42880.00, pd:5310.00, ded:28, tmp:62, per:10},
+    am:{n:'Andrés Mite Solano',   ci:'0956781234', ts:'3,2 años',  st:'Activo',           pj:0, pd:0, ded:0, tmp:0, per:0}
   };
   var SALIDAS=[
     {n:'Rosa Villamar Chóez', ci:'0912345678', f:'14/03/2025', m:'Renuncia voluntaria',     lib:9640.00, aid:1620.00, nat:'aju'},
@@ -1775,8 +1838,292 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
     el.setAttribute('aria-label', el.getAttribute('data-serie')+': '
       +data.map(function(d){return d[0]+' $'+d[1].toLocaleString('es-EC');}).join(', ')+'.');
   }
-  chartNeu('chProv',[[2021,286400],[2022,324180],[2023,361920],[2024,412850],[2025,435250]]);
-  chartNeu('chAid',[[2021,58900],[2022,69340],[2023,80120],[2024,92400],[2025,103716]]);
+  /* ══ BENEFICIO ACTIVO (jubilación ↔ desahucio) ═══════════════════════
+     El selector de Mi cierre gobierna Mi cierre, Kárdex y Análisis (Reportes
+     queda en jubilación, con nota en el panel). Las cifras de desahucio son
+     ilustrativas pero auto-coherentes: cadena 37.850+6.180−1.750−1.890−640
+     = 39.750 (= total del kárdex) y AID 8.610+1.390,50−310 = 9.690,50. */
+  var BEN='jub';
+  var CIE={
+    jub:{sub:'Ejercicio 2025 · Jubilación patronal · cifras preliminares', num:'68.420,00',
+      a1T:'1 · Provisión por jubilación patronal',
+      a1L:['Gasto por jubilación patronal','Provisión por jubilación patronal'], a1V:'68.420,00',
+      a1c:'Gasto por jubilación patronal 68420.00 / Provisión por jubilación patronal 68420.00',
+      a2V:'15.394,50',
+      a2c:'Activo por impuesto diferido 15394.50 / Gasto por impuesto a la renta diferido 15394.50',
+      ch:['412.850,00','68.420,00','−12.340,00','−24.180,00','−9.500,00','435.250,00'],
+      fsC:'Cierra en 435.250,00', fsN:'24.180,00 liberados por 3 salidas',
+      nu:['18.135,00','6.045,00','24.180,00'],
+      fsA:'Cierra en 103.716,50', aid:['92.400,00','15.394,50','−4.078,00','103.716,50'],
+      kd:['78.410,00','58.807,50','−14.701,87'], lbl:'Jubilación patronal'},
+    des:{sub:'Ejercicio 2025 · Bonificación por desahucio · cifras preliminares', num:'6.180,00',
+      a1T:'1 · Provisión por desahucio',
+      a1L:['Gasto por bonificación por desahucio','Provisión por bonificación por desahucio'], a1V:'6.180,00',
+      a1c:'Gasto por bonificación por desahucio 6180.00 / Provisión por bonificación por desahucio 6180.00',
+      a2V:'1.390,50',
+      a2c:'Activo por impuesto diferido 1390.50 / Gasto por impuesto a la renta diferido 1390.50',
+      ch:['37.850,00','6.180,00','−1.750,00','−1.890,00','−640,00','39.750,00'],
+      fsC:'Cierra en 39.750,00', fsN:'1.890,00 liberados por 3 salidas',
+      nu:['1.417,50','472,50','1.890,00'],
+      fsA:'Cierra en 9.690,50', aid:['8.610,00','1.390,50','−310,00','9.690,50'],
+      /* lbl: forma corta en controles y rótulos; la larga vive en títulos
+         (ansSub) y en el formulario de Salidas. */
+      kd:['6.940,00','5.205,00','−1.301,25'], lbl:'Desahucio'}
+  };
+  var CH={
+    jub:{prov:[[2021,286400],[2022,324180],[2023,361920],[2024,412850],[2025,435250]],
+      aid:[[2021,58900],[2022,69340],[2023,80120],[2024,92400],[2025,103716]],
+      kp:['$435.250','al cierre 2025 · jubilación patronal',
+          '<span class="chip">+$22.400 vs 2024</span><span class="chip">+52% en 5 años</span>',
+          '$103.716','a tu favor al cierre 2025 · jubilación patronal',
+          '<span class="chip indigo">+$11.316 vs 2024</span><span class="chip indigo">+76% en 5 años</span>']},
+    des:{prov:[[2021,31200],[2022,33450],[2023,35600],[2024,37850],[2025,39750]],
+      aid:[[2021,5900],[2022,6850],[2023,7760],[2024,8610],[2025,9690]],
+      kp:['$39.750','al cierre 2025 · bonificación por desahucio',
+          '<span class="chip">+$1.900 vs 2024</span><span class="chip">+27% en 5 años</span><span class="chip amber">PROVISIONAL</span>',
+          '$9.690','a tu favor al cierre 2025 · bonificación por desahucio',
+          '<span class="chip indigo">+$1.080 vs 2024</span><span class="chip indigo">+64% en 5 años</span><span class="chip amber">PROVISIONAL</span>']}
+  };
+
+  function renderCierre(){
+    var d=CIE[BEN];
+    $('#ansSub').textContent=d.sub; $('#ansNum').textContent=d.num;
+    $('#as1T').textContent=d.a1T; $('#as1C').dataset.c=d.a1c; $('#as2C').dataset.c=d.a2c;
+    $('#as1B').innerHTML='<tr><td>'+d.a1L[0]+'</td><td class="n">'+d.a1V+'</td><td class="n">—</td></tr>'
+      +'<tr><td class="ind">'+d.a1L[1]+'</td><td class="n">—</td><td class="n">'+d.a1V+'</td></tr>';
+    $('#as1F').innerHTML='<tr><td>Totales</td><td class="n">'+d.a1V+'</td><td class="n">'+d.a1V+'</td></tr>';
+    $('#as2B').innerHTML='<tr><td>Activo por impuesto diferido</td><td class="n">'+d.a2V+'</td><td class="n">—</td></tr>'
+      +'<tr><td class="ind">Gasto por impuesto a la renta diferido</td><td class="n">—</td><td class="n">'+d.a2V+'</td></tr>';
+    $('#as2F').innerHTML='<tr><td>Totales</td><td class="n">'+d.a2V+'</td><td class="n">'+d.a2V+'</td></tr>';
+    var CL=['box','box','box neg','box neg','box neg','box tot'], OP=['&nbsp;','+','±','−','−','='],
+        BL=['Saldo inicial','Provisión del periodo','Ajuste actuarial (ORI)','Provisión no utilizada','Pagos del periodo','Saldo final'];
+    $('#chainComp').innerHTML=d.ch.map(function(v,i){
+      return '<div class="'+CL[i]+'"><div class="op">'+OP[i]+'</div><div class="bl">'+BL[i]+'</div><div class="bn">'+v+'</div></div>';}).join('');
+    $('#fsComp').textContent=d.fsC; $('#fsNoU').textContent=d.fsN;
+    $('#noU1').textContent=d.nu[0]; $('#noU2').textContent=d.nu[1]; $('#noUT').textContent=d.nu[2];
+    $('#fsAid').textContent=d.fsA;
+    var AC=['box','box','box neg','box tot'], AO=['&nbsp;','+','−','='],
+        AB=['Saldo inicial','Generado','Consumido','Saldo final'];
+    $('#chainAid').innerHTML=d.aid.map(function(v,i){
+      return '<div class="'+AC[i]+'"><div class="op">'+AO[i]+'</div><div class="bl">'+AB[i]+'</div><div class="bn">'+v+'</div></div>';}).join('');
+    $('#benNote').hidden=(BEN==='jub');
+    /* Copys condicionales: en Desahucio, Reportes y Salidas siguen mostrando
+       jubilación — se avisa ANTES del click, no solo al llegar. */
+    $('#repXtra').textContent=(BEN==='des')?' (por ahora muestra jubilación patronal)':'';
+    $('#noUXtra').textContent=(BEN==='des')
+      ?' · La tabla de Salidas muestra la porción de jubilación; la de desahucio es ilustrativa (PROVISIONAL).':'';
+  }
+
+  function renderCharts(){
+    var k=CH[BEN];
+    chartNeu('chProv',k.prov); chartNeu('chAid',k.aid);
+    $('#kpP1').textContent=k.kp[0]; $('#kpP2').textContent=k.kp[1]; $('#kpP3').innerHTML=k.kp[2];
+    $('#kpA1').textContent=k.kp[3]; $('#kpA2').textContent=k.kp[4]; $('#kpA3').innerHTML=k.kp[5];
+  }
+
+  /* ══ KÁRDEX · histórico por persona (empatado al requerimiento) ═══════
+     Datos en centavos [año, costo, interés, gasto, p/g|null, obdFin, aidAño,
+     aidAcum], generados con cadena exacta: obdFin = anterior + gasto + p/g;
+     interés = 4,5% del OBD inicial; AID = 25% del gasto en años ND temporario.
+     Empates: jub fin2025 = 78.410,00 y gasto2025 = 6.120,00 (= vista global y
+     padrón pj) · des fin2025 = 6.940,00 (= padrón pd). 2025: P/G pendiente. */
+  var KDX={
+  jub:[[2001,105108,0,105108,-4204,100904,0,0],
+   [2002,110364,4541,114905,4596,220405,0,0],
+   [2003,115882,9918,125800,-5032,341173,0,0],
+   [2004,121676,15353,137029,5481,483683,0,0],
+   [2005,127760,21766,149526,-5981,627228,0,0],
+   [2006,134148,28225,162373,6495,796096,0,0],
+   [2007,140855,35824,176679,-7067,965708,0,0],
+   [2008,147898,43457,191355,7654,1164717,0,0],
+   [2009,155293,52412,207705,-8308,1364114,0,0],
+   [2010,163058,61385,224443,8978,1597535,0,0],
+   [2011,171210,71889,243099,-9724,1830910,0,0],
+   [2012,179771,82391,262162,10486,2103558,0,0],
+   [2013,188760,94660,283420,-11337,2375641,0,0],
+   [2014,198197,106904,305101,12204,2692946,0,0],
+   [2015,208107,121183,329290,-13172,3009064,0,0],
+   [2016,218513,135408,353921,14157,3377142,0,0],
+   [2017,229438,151971,381409,-15256,3743295,0,0],
+   [2018,240910,168448,409358,16374,4169027,102340,102340],
+   [2019,252956,187606,440562,-17622,4591967,110141,212481],
+   [2020,265604,206639,472243,18890,5083100,118061,330542],
+   [2021,278884,228740,507624,-20294,5570430,0,330542],
+   [2022,283331,250669,534000,-21430,6083000,133500,464042],
+   [2023,298265,273735,572000,18760,6673760,143000,607042],
+   [2024,273681,300319,574000,-18760,7229000,143500,750542],
+   [2025,286695,325305,612000,null,7841000,153000,903542]],
+  des:[[2001,9472,0,9472,-379,9093,0,0],
+   [2002,9946,409,10355,414,19862,0,0],
+   [2003,10443,894,11337,-453,30746,0,0],
+   [2004,10965,1384,12349,494,43589,0,0],
+   [2005,11514,1962,13476,-539,56526,0,0],
+   [2006,12089,2544,14633,585,71744,0,0],
+   [2007,12694,3228,15922,-637,87029,0,0],
+   [2008,13328,3916,17244,690,104963,0,0],
+   [2009,13995,4723,18718,-749,122932,0,0],
+   [2010,14695,5532,20227,809,143968,0,0],
+   [2011,15429,6479,21908,-876,165000,0,0],
+   [2012,16201,7425,23626,945,189571,0,0],
+   [2013,17011,8531,25542,-1022,214091,0,0],
+   [2014,17861,9634,27495,1100,242686,0,0],
+   [2015,18754,10921,29675,-1187,271174,0,0],
+   [2016,19692,12203,31895,1276,304345,0,0],
+   [2017,20677,13696,34373,-1375,337343,0,0],
+   [2018,21711,15180,36891,1476,375710,9223,9223],
+   [2019,22796,16907,39703,-1588,413825,9926,19149],
+   [2020,23936,18622,42558,1702,458085,10640,29789],
+   [2021,25133,20614,45747,-1832,502000,0,29789],
+   [2022,23210,22590,45800,-1840,545960,11450,41239],
+   [2023,23232,24568,47800,1290,595050,11950,53189],
+   [2024,22423,26777,49200,-1450,642800,12300,65489],
+   [2025,22274,28926,51200,null,694000,12800,78289]]
+};
+  var KV='prov';
+  function km(c){return (c/100).toLocaleString('es-EC',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  function kcell(c,bold){
+    if(c===null||c===undefined) return '<td class="n">—</td>';
+    return '<td class="n'+(c<0?' negv':'')+(bold?'" style="font-weight:800':'')+'">'+(c<0?'−':'')+km(Math.abs(c))+'</td>';
+  }
+  function knd(y){return (y>=2018&&y<=2020)||y>=2022;}
+  function kclasHTML(y){
+    if(y===2025) return '<td><span class="chip amber">ND temporario · preliminar</span></td>';
+    return knd(y)?'<td><span class="chip indigo">ND temporario</span></td>'
+                 :'<td><span class="chip green">Deducible</span></td>';
+  }
+  function kclasTxt(y){return y===2025?'ND temporario (preliminar)':(knd(y)?'ND temporario':'Deducible');}
+  function kts(y){return (y-2001+0.6).toLocaleString('es-EC',{minimumFractionDigits:1,maximumFractionDigits:1});}
+  function kyear(y,plain){
+    /* plain: sin punto de color — en Movimientos no hay columna Clasificación
+       que lo explique y quedaría como código sin leyenda. */
+    return '<td style="white-space:nowrap">'+(plain?'':'<span class="dot'+(knd(y)?' ndt':'')+'"></span>')+'<b>'+y+'</b></td>';
+  }
+  var KHINT={
+    ts:'Tiempo de servicio al cierre del ejercicio, en años.',
+    obd:'Obligación por beneficios definidos al inicio del año (NIC 19).',
+    cs:'Lo que el trabajo de este año añade a la obligación.',
+    int:'El costo financiero de la obligación acumulada (4,5%).',
+    g:'Costo del servicio + interés neto: lo que va a resultados.',
+    pg:'Pérdida (−) o ganancia (+) por cambio de supuestos; va a ORI y no tributa.',
+    cl:'Cómo trató el gasto la norma tributaria vigente ese año.',
+    pag:'Pagos del beneficio con cargo a la provisión de esta persona.',
+    aidg:'25% del gasto de los años clasificados ND temporario.',
+    aida:'El vale a favor acumulado que aporta esta persona.'
+  };
+  function hintBtn(hint,de){return '<button type="button" class="hint" title="'+hint+'" data-h="'+hint+'" aria-label="Qué es '+de+'">ⓘ</button>';}
+  function kh(txt,hint){return '<th class="n">'+txt+hintBtn(hint,txt)+'</th>';}
+  function renderKdx(){
+    var D=KDX[BEN], rows='', foot='', head='', note='', prev=0, sg=0, spg=0, sc=0, si=0;
+    D.forEach(function(r){ sg+=r[3]; sc+=r[1]; si+=r[2]; if(r[4]!==null)spg+=r[4]; });
+    var last=D[D.length-1];
+    if(KV==='prov'){
+      head='<tr><th>Año</th>'+kh('TS (años)',KHINT.ts)+kh('OBD inicial',KHINT.obd)
+        +kh('Costo servicio presente',KHINT.cs)+kh('Interés neto',KHINT.int)+kh('Gasto total',KHINT.g)
+        +kh('P/G actuarial',KHINT.pg)+'<th>Clasificación'+hintBtn(KHINT.cl,'Clasificación')+'</th></tr>';
+      prev=0;
+      D.forEach(function(r){
+        rows+='<tr>'+kyear(r[0])+'<td class="n">'+kts(r[0])+'</td>'+kcell(prev===0?null:prev)
+          +kcell(r[1])+kcell(r[2])+kcell(r[3],true)+kcell(r[4])+kclasHTML(r[0])+'</tr>';
+        prev=r[5];
+      });
+      foot='<tr><td colspan="3" style="font-weight:800;background:#fbfcfe;padding:12px 16px">Total 2001–2025</td>'
+        +'<td class="n" style="background:#fbfcfe">'+km(sc)+'</td><td class="n" style="background:#fbfcfe">'+km(si)+'</td>'
+        +'<td class="n" style="background:#fbfcfe;font-weight:800">'+km(sg)+'</td>'
+        +'<td class="n'+(spg<0?' negv':'')+'" style="background:#fbfcfe">'+(spg<0?'−':'')+km(Math.abs(spg))+'</td>'
+        +'<td style="background:#fbfcfe">OBD al cierre: <b>'+km(last[5])+'</b></td></tr>';
+      note='El P/G actuarial va a resultados integrales (ORI) y no tributa. El 2025 está en curso: su P/G se conoce con el cierre definitivo.';
+    } else if(KV==='mov'){
+      head='<tr><th>Año</th>'+kh('Saldo inicial',KHINT.obd)+kh('Gasto total (+)',KHINT.g)
+        +kh('P/G actuarial (±)',KHINT.pg)+kh('Pagos con cargo (−)',KHINT.pag)
+        +'<th class="n">Saldo final</th></tr>';
+      prev=0;
+      D.forEach(function(r){
+        rows+='<tr>'+kyear(r[0],true)+kcell(prev===0?null:prev)+kcell(r[3])+kcell(r[4])
+          +'<td class="n">—</td>'+kcell(r[5],true)+'</tr>';
+        prev=r[5];
+      });
+      foot='<tr><td colspan="2" style="font-weight:800;background:#fbfcfe;padding:12px 16px">Total 2001–2025</td>'
+        +'<td class="n" style="background:#fbfcfe">'+km(sg)+'</td>'
+        +'<td class="n'+(spg<0?' negv':'')+'" style="background:#fbfcfe">'+(spg<0?'−':'')+km(Math.abs(spg))+'</td>'
+        +'<td class="n" style="background:#fbfcfe">—</td>'
+        +'<td class="n" style="background:#fbfcfe;font-weight:800">'+km(last[5])+'</td></tr>';
+      note='Sin pagos con cargo a la provisión en el histórico de esta persona. El saldo final de cada año es el inicial del siguiente. El 2025 está en curso: su P/G se conoce con el cierre definitivo y el saldo es preliminar.';
+    } else {
+      head='<tr><th>Año</th><th>Clasificación'+hintBtn(KHINT.cl,'Clasificación')+'</th>'
+        +kh('Gasto del año',KHINT.g)+kh('AID generado (25%)',KHINT.aidg)+kh('AID acumulado',KHINT.aida)+'</tr>';
+      var sa=0;
+      D.forEach(function(r){
+        sa=r[7];
+        rows+='<tr>'+kyear(r[0])+kclasHTML(r[0])+kcell(r[3])
+          +(r[6]?kcell(r[6]):'<td class="n">—</td>')+kcell(r[7],true)+'</tr>';
+      });
+      foot='<tr><td colspan="2" style="font-weight:800;background:#fbfcfe;padding:12px 16px">Total 2001–2025</td>'
+        +'<td class="n" style="background:#fbfcfe">'+km(sg)+'</td>'
+        +'<td class="n" style="background:#fbfcfe">'+km(sa)+'</td>'
+        +'<td class="n" style="background:#fbfcfe;font-weight:800">'+km(sa)+'</td></tr>';
+      note='Solo los años clasificados como ND temporario generan impuesto diferido (25% del gasto). El P/G actuarial va a ORI y no genera AID.';
+    }
+    $('#kdxH').innerHTML=head; $('#kdxB').innerHTML=rows; $('#kdxF').innerHTML=foot;
+    $('#kdxNote').textContent=note;
+    var d=CIE[BEN];
+    $('#kdL1').textContent=d.kd[0]; $('#kdL2').textContent=d.kd[1]; $('#kdL3').textContent=d.kd[2];
+    $('#kBenNote').hidden=(BEN==='jub');
+  }
+
+  /* Exportar a Excel: CSV real de la vista activa (separador ; y coma decimal,
+     el formato que Excel espera en configuración regional latina). */
+  $('#kExp').addEventListener('click',function(){
+    var D=KDX[BEN], lines=[], prev=0;
+    var n2=function(c){return (c===null||c===undefined)?'':(c/100).toFixed(2).replace('.',',');};
+    if(KV==='prov'){
+      lines.push('Año;TS (años);OBD inicial;Costo servicio presente;Interés neto;Gasto total;P/G actuarial;Clasificación');
+      D.forEach(function(r){
+        lines.push([r[0],kts(r[0]),n2(prev===0?null:prev),n2(r[1]),n2(r[2]),n2(r[3]),n2(r[4]),kclasTxt(r[0])].join(';'));
+        prev=r[5];
+      });
+    } else if(KV==='mov'){
+      lines.push('Año;Saldo inicial;Gasto total;P/G actuarial;Pagos con cargo;Saldo final');
+      D.forEach(function(r){
+        lines.push([r[0],n2(prev===0?null:prev),n2(r[3]),n2(r[4]),'',n2(r[5])].join(';'));
+        prev=r[5];
+      });
+    } else {
+      lines.push('Año;Clasificación;Gasto del año;AID generado (25%);AID acumulado');
+      D.forEach(function(r){
+        lines.push([r[0],kclasTxt(r[0]),n2(r[3]),r[6]?n2(r[6]):'',n2(r[7])].join(';'));
+      });
+    }
+    var name='kardex-mariana-salcedo-'+(BEN==='jub'?'jubilacion':'desahucio')+'-'+KV+'.csv';
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'}));
+    a.download=name; document.body.appendChild(a); a.click(); a.remove();
+    say('Descargado '+name);
+  });
+
+  function setBen(b,quiet){
+    BEN=b;
+    $('#selBen').value=(b==='jub'?'Jubilación patronal':'Desahucio');
+    $$('#kbTabs .subtab').forEach(function(t){t.classList.toggle('is-on',t.dataset.b===b);});
+    $('#kgBen').textContent=CIE[b].lbl;
+    $('#kgProv').hidden=(b==='jub');
+    $$('#s-k1 [data-j]').forEach(function(td){td.textContent=(b==='jub'?td.dataset.j:td.dataset.d);});
+    renderCierre(); renderKdx(); renderCharts();
+    if(!quiet) say('Viendo cifras de: '+CIE[b].lbl);
+  }
+  $('#selBen').addEventListener('change',function(){ setBen(this.value==='Desahucio'?'des':'jub'); });
+  $$('#kbTabs .subtab').forEach(function(t){ t.addEventListener('click',function(){ setBen(this.dataset.b); }); });
+  $$('#kvTabs .subtab').forEach(function(t){ t.addEventListener('click',function(){
+    /* El handler genérico de subtabs no alcanza a este grupo (vive dentro de
+       .khead, no como hijo directo del panel): la píldora se mueve aquí. */
+    KV=this.dataset.v;
+    $$('#kvTabs .subtab').forEach(function(x){x.classList.toggle('is-on',x===t);});
+    renderKdx();
+  }); });
+  /* ⓘ por tap/teclado: en táctil no existe hover, la definición sale al toast. */
+  $('#kdxT').addEventListener('click',function(e){
+    var h=e.target.closest('.hint'); if(h) say(h.dataset.h);
+  });
+  setBen('jub',true);
 
   /* ══ TOUR (patrón spotlight de ACTAF-5236) ══ */
   var steps=[
