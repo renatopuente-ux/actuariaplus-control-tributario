@@ -111,7 +111,7 @@ body{
 }
 button,input,select,textarea{font-family:inherit}
 button{font-size:inherit;cursor:pointer}
-a{color:var(--indigo-ink);text-decoration:none}
+a{color:var(--orange-ink);text-decoration:none}
 a:hover{text-decoration:underline}
 
 ::-webkit-scrollbar{width:9px;height:9px}
@@ -256,33 +256,33 @@ body::before  {left:19%;width:190px;height:190px;filter:blur(28px);
   box-shadow:var(--neu-out-sm)}
 .sb-card b{display:block;color:var(--navy);font-size:var(--font-size-tiny);font-weight:800}
 
-/* ─── 5 · TOPBAR — píldora navy flotante ─────────────────────────────── */
-/* z-index 100 < sidebar 200 a propósito: el sidebar pasa por encima para que
-   su franja superior muestre el vidrio contra el azul oscuro. */
+/* ─── 5 · TOPBAR — píldora de vidrio flotante ────────────────────────── */
+/* Antes era navy; el usuario prefiere superficies del color base para que
+   el neumorfismo se lea. z-index 100 < sidebar 200 a propósito. */
 .tb{
   position:fixed;top:var(--tb-top);left:12px;right:12px;z-index:100;
   height:var(--tb-h);border-radius:29px;
-  background:linear-gradient(135deg,#1B2757 0%,var(--navy-deep) 100%);
+  background:var(--glass-bg);
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  border:1px solid var(--glass-border);
   display:flex;align-items:center;justify-content:flex-end;gap:18px;
   padding:0 28px 0 calc(var(--sb-left) + var(--sb-w) + 24px);
   box-shadow:
-    0 10px 40px rgba(21,31,71,.40),
-    0 3px 10px rgba(21,31,71,.24),
-    inset 0 1px 0 rgba(255,255,255,.08);
+    0 10px 34px rgba(21,31,71,.16),
+    0 3px 10px rgba(21,31,71,.10),
+    var(--glass-shine);
 }
-.tb-bell{background:rgba(255,255,255,.08);border:0;color:#fff;line-height:0;
-  padding:9px;border-radius:11px;transition:background .18s}
-.tb-bell:hover{background:rgba(255,255,255,.18)}
-.tb-bell:focus-visible{outline:2px solid #AFC0FF;outline-offset:2px}
-.tb-ent{display:flex;align-items:center;gap:12px;color:#fff;font-weight:800;
+.tb-bell{background:var(--bg);border:0;color:var(--navy);line-height:0;
+  padding:9px;border-radius:11px;transition:background .18s,box-shadow .18s;
+  box-shadow:var(--neu-out-sm)}
+.tb-bell:hover{background:rgba(255,255,255,.65)}
+.tb-bell:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
+.tb-ent{display:flex;align-items:center;gap:12px;color:var(--navy);font-weight:800;
   font-size:var(--font-size-small)}
-/* Sobre navy no va vidrio blanco (se ensucia): gradiente translúcido nativo
-   y par de sombras tintado al propio navy. */
 .tb-ent .ico{width:38px;height:38px;border-radius:var(--radius-12);
-  display:grid;place-items:center;
-  background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,.08));
-  border:1px solid rgba(255,255,255,.22);
-  box-shadow:3px 3px 8px var(--sh-navy-d),-2px -2px 6px var(--sh-navy-l)}
+  display:grid;place-items:center;color:var(--navy);
+  background:var(--bg);
+  box-shadow:var(--neu-out-sm)}
 
 /* ─── 6 · CABECERA DE CONTENIDO ──────────────────────────────────────── */
 h1{font-size:var(--font-size-h2);line-height:var(--line-height-h2);font-weight:800;
@@ -362,51 +362,54 @@ h1{font-size:var(--font-size-h2);line-height:var(--line-height-h2);font-weight:8
 .chip.indigo{background:var(--indigo-bg);color:var(--indigo-ink);border-color:var(--indigo-bd)}
 
 /* ─── 12 · MOV. 6 · Enlaces contextuales ─────────────────────────────── */
-/* Se quedan en indigo: NO pasan al naranja que ActuaFast usa para enlaces. */
-.link-act{background:none;border:0;padding:0;color:var(--indigo-ink);font-weight:700;
+/* Todo text link va en naranja --orange-ink (pedido del usuario 2026-09-07);
+   el indigo queda solo para estados de control (tabs, subtabs) y cifras AID. */
+.link-act{background:none;border:0;padding:0;color:var(--orange-ink);font-weight:700;
   font-size:var(--font-size-tiny);text-decoration:underline;text-underline-offset:2px;
   border-radius:4px}
-.link-act:hover{text-shadow:0 0 10px rgba(47,95,204,.30)}
+.link-act:hover{text-shadow:0 0 10px rgba(168,67,28,.30)}
 .link-act:focus-visible{outline:2px solid var(--indigo);outline-offset:3px}
 
-/* ─── 13 · MOV. 5 · Puerta de entrada (superficie navy) ──────────────── */
-.door{background:linear-gradient(135deg,var(--navy) 0%,#2A3A78 100%);color:#fff;
+/* ─── 13 · MOV. 5 · Puerta de entrada ────────────────────────────────── */
+/* Antes navy con tarjetas de vidrio; ahora superficie base para que el
+   relieve se lea (preferencia del usuario, 2026-09-07). */
+.door{background:var(--bg);color:var(--navy);
   border-radius:var(--radius-20);padding:26px 28px;margin-bottom:24px;
   position:relative;overflow:hidden;
-  box-shadow:8px 8px 24px rgba(21,31,71,.34),-4px -4px 14px rgba(245,248,255,.85)}
+  box-shadow:var(--neu-out)}
 .door h2{margin:0 0 4px;font-size:var(--font-size-h4);line-height:var(--line-height-h4);font-weight:800}
-.door p{margin:0 0 20px;color:rgba(255,255,255,.80);font-size:var(--font-size-tiny);max-width:640px}
+.door p{margin:0 0 20px;color:var(--color-text-weak);font-size:var(--font-size-tiny);max-width:640px}
 /* El min() clampa la pista igual que en .grid2: sin él, a 320px la pista de
    210px excede el contenedor en cuanto alguien toque un padding. */
 .door-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:12px}
-.door-card{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20);
-  border-radius:var(--radius-12);padding:15px 16px;text-align:left;color:#fff;
+.door-card{background:var(--glass-bg);border:1px solid var(--glass-border);
+  border-radius:var(--radius-12);padding:15px 16px;text-align:left;color:var(--navy);
   display:flex;flex-direction:column;gap:5px;min-width:0;
   transition:background .18s,box-shadow .18s,transform .18s;
-  box-shadow:3px 3px 10px var(--sh-navy-d),-2px -2px 7px rgba(70,95,170,.34)}
-.door-card:hover{background:rgba(255,255,255,.18);transform:translateY(-1px);
-  box-shadow:5px 5px 14px var(--sh-navy-d),-2px -2px 8px rgba(70,95,170,.42)}
+  box-shadow:var(--neu-out-sm),var(--glass-shine)}
+.door-card:hover{background:var(--glass-bg-hi);transform:translateY(-1px);
+  box-shadow:5px 5px 14px rgba(163,177,198,.60),-3px -3px 9px rgba(245,248,255,.95),var(--glass-shine)}
 .door-card:active{transform:translateY(0);
-  box-shadow:inset 2px 2px 6px rgba(8,13,32,.45),inset -2px -2px 6px rgba(70,95,170,.30)}
-.door-card:focus-visible{outline:2px solid #AFC0FF;outline-offset:2px}
+  box-shadow:var(--neu-in-sm)}
+.door-card:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
 .door-card b{font-size:var(--font-size-tiny);font-weight:800}
-.door-card span{font-size:var(--font-size-mini);color:rgba(255,255,255,.78);line-height:1.5}
-.door-x{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.14);border:0;
-  color:#fff;width:30px;height:30px;border-radius:50%;line-height:0;display:grid;
-  place-items:center;box-shadow:2px 2px 6px var(--sh-navy-d),-1px -1px 4px var(--sh-navy-l)}
-.door-x:hover{background:rgba(255,255,255,.26)}
-.door-x:focus-visible{outline:2px solid #AFC0FF;outline-offset:2px}
+.door-card span{font-size:var(--font-size-mini);color:var(--color-text-weak);line-height:1.5}
+.door-x{position:absolute;top:14px;right:14px;background:var(--bg);border:0;
+  color:var(--navy);width:30px;height:30px;border-radius:50%;line-height:0;display:grid;
+  place-items:center;box-shadow:var(--neu-out-sm)}
+.door-x:hover{background:rgba(255,255,255,.65)}
+.door-x:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
 
 /* ─── 14 · MOV. 1 · La respuesta primero ─────────────────────────────── */
 /* El borde de 2px navy se sustituye por el relieve más fuerte del sistema:
    en neumorfismo la jerarquía la da la elevación, no el trazo. */
 .answer{background:var(--bg);border:0;border-radius:var(--radius-20);
   overflow:hidden;margin-bottom:24px;box-shadow:var(--neu-out)}
-.answer-hd{background:linear-gradient(135deg,#1B2757 0%,var(--navy) 100%);color:#fff;
-  padding:18px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:12px;
-  box-shadow:inset 0 -1px 0 rgba(255,255,255,.10)}
+/* Cabecera en lavado suave, no navy: mismo recurso que .asiento-hd. */
+.answer-hd{background:rgba(163,177,198,.14);color:var(--navy);
+  padding:18px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:12px}
 .answer-hd h2{margin:0;font-size:var(--font-size-h4);line-height:var(--line-height-h4);font-weight:800}
-.answer-hd .sub{color:rgba(255,255,255,.78);font-size:var(--font-size-mini);width:100%;margin-top:-4px}
+.answer-hd .sub{color:var(--color-text-weak);font-size:var(--font-size-mini);width:100%;margin-top:-4px}
 .answer-bd{padding:22px 24px}
 .figure{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;margin-bottom:6px}
 .figure .num{font-size:42px;line-height:1.1;font-weight:800;color:var(--navy);
@@ -491,10 +494,12 @@ h1{font-size:var(--font-size-h2);line-height:var(--line-height-h2);font-weight:8
 .box .bn{font-size:var(--font-size-h4);line-height:1.2;font-weight:800;color:var(--navy);
   font-variant-numeric:tabular-nums}
 .chain > .box.tot{grid-column:1/-1}
-.box.tot{background:linear-gradient(135deg,#22305F 0%,var(--navy) 100%);
-  box-shadow:5px 5px 14px rgba(21,31,71,.38),-3px -3px 10px rgba(245,248,255,.90)}
-.box.tot .op,.box.tot .bl{color:rgba(255,255,255,.75)}
-.box.tot .bn{color:#fff;font-size:26px}
+/* El total ya no va navy: mismo color base y el énfasis lo pone el relieve
+   fuerte + el cuerpo de la cifra (preferencia del usuario, 2026-09-07). */
+.box.tot{background:var(--bg);
+  box-shadow:var(--neu-out)}
+.box.tot .op,.box.tot .bl{color:var(--color-text-weak)}
+.box.tot .bn{color:var(--navy);font-size:26px}
 .box.neg .bn{color:var(--orange-ink)}
 
 /* Confirmación verde — sombras tintadas al propio verde */
@@ -646,20 +651,46 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
 .emptybox b{display:block;color:var(--navy)}
 .chip.red{background:var(--red-bg);color:var(--red-ink);border-color:var(--red-bd)}
 
-/* ─── 23 · Gráfico de barras ─────────────────────────────────────────── */
-/* TRAMPA: un height:% NO resuelve si el padre no tiene altura definida.
-   El track intermedio con flex:1 es lo único que se la da. No colapsarlo. */
-.bars{display:flex;align-items:stretch;gap:14px;height:250px;padding:16px 6px 0;
-  border-bottom:1px solid var(--color-stroke-weak)}
-.bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
-.bar .btrack{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;min-height:0}
-.bar .bcol{width:100%;max-width:66px;border-radius:10px 10px 0 0;
-  background:linear-gradient(180deg,var(--indigo) 0%,var(--navy) 100%);
-  box-shadow:3px 3px 10px var(--sh-indigo-d),-2px -2px 7px var(--sh-indigo-l);
-  transition:height .5s cubic-bezier(.2,.8,.3,1)}
-.bar .bv{font-size:var(--font-size-mini);font-weight:800;color:var(--navy);
+/* ─── 23 · Gráficos — barras neu en pozos ────────────────────────────── */
+/* Cada año es un pozo hundido de altura completa (la escala visible) con el
+   relleno como píldora elevada adentro; el año vigente lleva el gradiente
+   fuerte. Sin eje dibujado: en neu la línea dura es un trazo prohibido.
+   Los valores van alineados arriba (fila legible tipo tabla) y el espacio
+   sobre las barras cortas lo ocupa el delta año contra año.
+   TRAMPA heredada: un height:% no resuelve sin altura definida en el padre —
+   aquí la da .nc-bars. El relleno resta 10px para no tapar el rin del pozo. */
+.nc-kpi{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 18px;margin:2px 0 20px}
+.nc-kpi .knum{font-size:34px;line-height:1.05;font-weight:800;color:var(--navy);
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.nc-kpi .klbl{font-size:var(--font-size-mini);color:var(--color-text-weak);
+  font-weight:600;margin-bottom:4px}
+.nc-kpi .kchips{display:flex;gap:8px;flex-wrap:wrap;margin-left:auto;margin-bottom:2px}
+.nc-bars{display:flex;gap:16px;height:260px;padding:4px 2px 0}
+.nc-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0}
+.nc-val{font-size:var(--font-size-mini);font-weight:800;color:var(--color-text-strong);
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.nc-dlt{font-size:var(--font-size-micro);font-weight:700;color:var(--color-text-weak);
   font-variant-numeric:tabular-nums}
-.bar .bx{font-size:var(--font-size-mini);color:var(--color-text-weak);font-weight:700}
+.nc-track{position:relative;flex:1;width:100%;max-width:76px;border-radius:var(--radius-16);
+  background:var(--bg);box-shadow:var(--neu-in-sm)}
+.nc-fill{position:absolute;left:5px;right:5px;bottom:5px;border-radius:var(--radius-12);
+  background:linear-gradient(180deg,#93A5EA 0%,#5E76DE 100%);
+  box-shadow:2px 3px 8px rgba(47,95,204,.28),inset 0 1px 0 rgba(255,255,255,.35);
+  transition:height .6s cubic-bezier(.2,.8,.3,1)}
+.nc-col.now .nc-fill{background:linear-gradient(180deg,var(--indigo) 0%,var(--navy) 100%);
+  box-shadow:3px 4px 12px rgba(21,31,71,.36),inset 0 1px 0 rgba(255,255,255,.30)}
+.nc-col.now .nc-val{color:var(--navy);font-size:var(--font-size-tiny)}
+.nc-year{font-size:var(--font-size-mini);color:var(--color-text-weak);font-weight:700}
+.nc-col.now .nc-year{color:var(--navy);font-weight:800}
+@media (max-width:640px){
+  .nc-bars{gap:9px;height:210px}
+  .nc-dlt{display:none}
+  .nc-kpi .kchips{margin-left:0}
+  /* A 320px la columna mide ~45px: sin esto, "435.250" en nowrap se toca
+     con el valor vecino. */
+  .nc-val{font-size:11px;letter-spacing:-.02em}
+  .nc-col.now .nc-val{font-size:12px}
+}
 
 /* ─── 24 · Subtabs — track hundido, píldora elevada ──────────────────── */
 .subtabs{display:inline-flex;gap:6px;margin-bottom:18px;flex-wrap:wrap;padding:6px;
@@ -682,10 +713,10 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
 /* ─── 25 · Toast ─────────────────────────────────────────────────────── */
 /* Clase de estado `on`, NO `is-on` — única excepción del prototipo. */
 .toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,20px);
-  background:linear-gradient(135deg,#22305F 0%,var(--navy) 100%);color:#fff;
+  background:var(--bg);color:var(--navy);
+  box-shadow:var(--neu-out),0 8px 26px rgba(21,31,71,.24);
   padding:13px 22px;border-radius:999px;font-size:var(--font-size-tiny);font-weight:700;
-  opacity:0;pointer-events:none;transition:.25s ease;z-index:9998;
-  box-shadow:0 10px 30px rgba(21,31,71,.42),inset 0 1px 0 rgba(255,255,255,.12)}
+  opacity:0;pointer-events:none;transition:.25s ease;z-index:9998}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 /* ─── 26 · FAB + tour ────────────────────────────────────────────────── */
@@ -829,7 +860,7 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
     <header class="tb">
       <button class="tb-bell" aria-label="Notificaciones"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 01-3.4 0"/></svg></button>
       <div class="tb-ent">
-        <span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M3 21h18"/><path d="M5 21V5h9v16"/><path d="M14 10h5v11"/><path d="M8 8h3M8 12h3M8 16h3"/></svg></span>
+        <span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 21h18"/><path d="M5 21V5h9v16"/><path d="M14 10h5v11"/><path d="M8 8h3M8 12h3M8 16h3"/></svg></span>
         TEOJAMA COMERCIAL
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
       </div>
@@ -1391,13 +1422,13 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
           <div class="card">
             <h3>Provisión acumulada, año por año</h3>
             <p class="lead">Cómo viene creciendo tu pasivo laboral.</p>
-            <div class="bars">
-              <div class="bar"><span class="bv">286.400</span><div class="btrack"><div class="bcol" style="height:44%"></div></div><span class="bx">2021</span></div>
-              <div class="bar"><span class="bv">324.180</span><div class="btrack"><div class="bcol" style="height:56%"></div></div><span class="bx">2022</span></div>
-              <div class="bar"><span class="bv">361.920</span><div class="btrack"><div class="bcol" style="height:68%"></div></div><span class="bx">2023</span></div>
-              <div class="bar"><span class="bv">412.850</span><div class="btrack"><div class="bcol" style="height:84%"></div></div><span class="bx">2024</span></div>
-              <div class="bar"><span class="bv">435.250</span><div class="btrack"><div class="bcol" style="height:100%"></div></div><span class="bx">2025</span></div>
+            <div class="nc-kpi">
+              <span class="knum">$435.250</span>
+              <span class="klbl">al cierre 2025 · jubilación patronal</span>
+              <span class="kchips"><span class="chip">+$22.400 vs 2024</span><span class="chip">+52% en 5 años</span></span>
             </div>
+            <div class="nc-bars" id="chProv" role="img"
+                 data-serie="Provisión acumulada por año"></div>
             <p class="trace" style="margin-top:16px">
               El detalle persona por persona vive en <button class="link-act" data-go="kardex">Kárdex</button>,
               para que no tengas que buscarlo en dos lugares.
@@ -1409,13 +1440,13 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
           <div class="card">
             <h3>Impuesto diferido acumulado</h3>
             <p class="lead">El vale a favor, año por año.</p>
-            <div class="bars">
-              <div class="bar"><span class="bv">58.900</span><div class="btrack"><div class="bcol" style="height:40%"></div></div><span class="bx">2021</span></div>
-              <div class="bar"><span class="bv">69.340</span><div class="btrack"><div class="bcol" style="height:52%"></div></div><span class="bx">2022</span></div>
-              <div class="bar"><span class="bv">80.120</span><div class="btrack"><div class="bcol" style="height:66%"></div></div><span class="bx">2023</span></div>
-              <div class="bar"><span class="bv">92.400</span><div class="btrack"><div class="bcol" style="height:82%"></div></div><span class="bx">2024</span></div>
-              <div class="bar"><span class="bv">103.716</span><div class="btrack"><div class="bcol" style="height:100%"></div></div><span class="bx">2025</span></div>
+            <div class="nc-kpi">
+              <span class="knum">$103.716</span>
+              <span class="klbl">a tu favor al cierre 2025</span>
+              <span class="kchips"><span class="chip indigo">+$11.316 vs 2024</span><span class="chip indigo">+76% en 5 años</span></span>
             </div>
+            <div class="nc-bars" id="chAid" role="img"
+                 data-serie="Impuesto diferido acumulado por año"></div>
           </div>
         </div>
       </section>
@@ -1723,6 +1754,29 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
 
   renderTabla();
   pick('ja');   /* ejemplo precargado: pago parcial de jubilación → muestra los dos movimientos del AID */
+
+  /* ══ GRÁFICOS neu (Análisis) — el delta año contra año se calcula, no se escribe ══ */
+  function chartNeu(elId,data){
+    var el=document.getElementById(elId); if(!el) return;
+    var max=Math.max.apply(null,data.map(function(d){return d[1];}));
+    var h='';
+    data.forEach(function(d,i){
+      var frac=d[1]/max, now=(i===data.length-1);
+      var dlt=i? '+'+((Math.round((d[1]/data[i-1][1]-1)*1000)/10).toLocaleString('es-EC'))+'%' : '&nbsp;';
+      h+='<div class="nc-col'+(now?' now':'')+'">'
+        +'<span class="nc-val">'+d[1].toLocaleString('es-EC')+'</span>'
+        +'<span class="nc-dlt">'+dlt+'</span>'
+        +'<div class="nc-track"><div class="nc-fill" style="height:calc((100% - 10px)*'+frac+')"></div></div>'
+        +'<span class="nc-year">'+d[0]+'</span></div>';
+    });
+    el.innerHTML=h;
+    /* Los hijos de role=img son presentacionales: el aria-label enumera la
+       serie completa para que el lector de pantalla no pierda los años medios. */
+    el.setAttribute('aria-label', el.getAttribute('data-serie')+': '
+      +data.map(function(d){return d[0]+' $'+d[1].toLocaleString('es-EC');}).join(', ')+'.');
+  }
+  chartNeu('chProv',[[2021,286400],[2022,324180],[2023,361920],[2024,412850],[2025,435250]]);
+  chartNeu('chAid',[[2021,58900],[2022,69340],[2023,80120],[2024,92400],[2025,103716]]);
 
   /* ══ TOUR (patrón spotlight de ACTAF-5236) ══ */
   var steps=[
