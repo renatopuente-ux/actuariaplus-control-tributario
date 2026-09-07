@@ -256,33 +256,35 @@ body::before  {left:19%;width:190px;height:190px;filter:blur(28px);
   box-shadow:var(--neu-out-sm)}
 .sb-card b{display:block;color:var(--navy);font-size:var(--font-size-tiny);font-weight:800}
 
-/* ─── 5 · TOPBAR — píldora de vidrio flotante ────────────────────────── */
-/* Antes era navy; el usuario prefiere superficies del color base para que
-   el neumorfismo se lea. z-index 100 < sidebar 200 a propósito. */
+/* ─── 5 · TOPBAR — píldora navy flotante ─────────────────────────────── */
+/* El navy del chrome SE QUEDA (corrección del usuario 2026-09-07): la regla
+   de "superficies al color base" aplica al contenido, no a la barra superior.
+   z-index 100 < sidebar 200 a propósito: el sidebar pasa por encima para que
+   su franja superior muestre el vidrio contra el azul oscuro. */
 .tb{
   position:fixed;top:var(--tb-top);left:12px;right:12px;z-index:100;
   height:var(--tb-h);border-radius:29px;
-  background:var(--glass-bg);
-  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
-  border:1px solid var(--glass-border);
+  background:linear-gradient(135deg,#1B2757 0%,var(--navy-deep) 100%);
   display:flex;align-items:center;justify-content:flex-end;gap:18px;
   padding:0 28px 0 calc(var(--sb-left) + var(--sb-w) + 24px);
   box-shadow:
-    0 10px 34px rgba(21,31,71,.16),
-    0 3px 10px rgba(21,31,71,.10),
-    var(--glass-shine);
+    0 10px 40px rgba(21,31,71,.40),
+    0 3px 10px rgba(21,31,71,.24),
+    inset 0 1px 0 rgba(255,255,255,.08);
 }
-.tb-bell{background:var(--bg);border:0;color:var(--navy);line-height:0;
-  padding:9px;border-radius:11px;transition:background .18s,box-shadow .18s;
-  box-shadow:var(--neu-out-sm)}
-.tb-bell:hover{background:rgba(255,255,255,.65)}
-.tb-bell:focus-visible{outline:2px solid var(--indigo);outline-offset:2px}
-.tb-ent{display:flex;align-items:center;gap:12px;color:var(--navy);font-weight:800;
+.tb-bell{background:rgba(255,255,255,.08);border:0;color:#fff;line-height:0;
+  padding:9px;border-radius:11px;transition:background .18s}
+.tb-bell:hover{background:rgba(255,255,255,.18)}
+.tb-bell:focus-visible{outline:2px solid #AFC0FF;outline-offset:2px}
+.tb-ent{display:flex;align-items:center;gap:12px;color:#fff;font-weight:800;
   font-size:var(--font-size-small)}
+/* Sobre navy no va vidrio blanco (se ensucia): gradiente translúcido nativo
+   y par de sombras tintado al propio navy. */
 .tb-ent .ico{width:38px;height:38px;border-radius:var(--radius-12);
-  display:grid;place-items:center;color:var(--navy);
-  background:var(--bg);
-  box-shadow:var(--neu-out-sm)}
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,.08));
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:3px 3px 8px var(--sh-navy-d),-2px -2px 6px var(--sh-navy-l)}
 
 /* ─── 6 · CABECERA DE CONTENIDO ──────────────────────────────────────── */
 h1{font-size:var(--font-size-h2);line-height:var(--line-height-h2);font-weight:800;
