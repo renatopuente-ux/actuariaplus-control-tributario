@@ -6,7 +6,7 @@
 <title>Control tributario · Actuaria+</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0.400;0.600;0.700;0.800;1.400&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════════════════════════════
    CTP · Control tributario — piel neu / glass / bento (sistema ActuaFast)
@@ -574,6 +574,77 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
 .dl .up{color:var(--green-ink)}
 .dl .dn{color:var(--orange-ink)}
 
+/* ─── 22b · SALIDAS — empatada al requerimiento base (Claude Design) ────
+   La pantalla del diseño llega en la piel plana de la plataforma; aquí se
+   traduce al sistema neu/glass conservando contenido, reglas y estados. */
+.phead{display:flex;flex-direction:column;gap:3px;margin-bottom:16px}
+.phead h2{margin:0;font-size:var(--font-size-h3);line-height:var(--line-height-h3);font-weight:800;color:var(--navy)}
+.phead p{margin:0;color:var(--color-text-weak);font-size:var(--font-size-tiny)}
+.sal2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(400px,100%),1fr));gap:16px;align-items:start}
+.badge-nat{display:inline-flex;align-items:center;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:800;margin-top:4px;box-shadow:var(--neu-in-sm);border:1px solid transparent}
+.badge-nat.rev{background:var(--green-bg);color:var(--green-ink);border-color:var(--green-bd)}
+.badge-nat.aju{background:var(--red-bg);color:var(--red-ink);border-color:var(--red-bd)}
+.tcell{display:flex;flex-direction:column;align-items:flex-start;gap:1px;min-width:0}
+.tcell small{color:var(--color-text-weak);font-size:var(--font-size-mini)}
+.sugwrap{position:relative}
+.sug{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:40;background:var(--bg);
+  border-radius:var(--radius-12);overflow:hidden;display:none;
+  box-shadow:8px 8px 22px rgba(21,31,71,.28),-4px -4px 12px rgba(245,248,255,.9)}
+.sug.is-on{display:block}
+.sug button{display:flex;flex-direction:column;gap:1px;width:100%;text-align:left;background:transparent;
+  border:0;padding:11px 14px;font-size:var(--font-size-tiny)}
+.sug button:hover{background:rgba(255,255,255,.6)}
+.sug button:focus-visible{outline:2px solid var(--indigo);outline-offset:-2px}
+.sug b{color:var(--navy)}
+.sug small{color:var(--color-text-weak);font-size:var(--font-size-mini)}
+.selbox{background:rgba(255,255,255,.5);box-shadow:var(--neu-in-sm);border-radius:var(--radius-12);
+  padding:13px 17px;margin-top:14px;font-size:var(--font-size-mini);line-height:1.8;color:var(--color-text-weak)}
+.selbox b{color:var(--navy)}
+.warnbox{border:0;border-left:4px solid var(--amber-500);background:var(--amber-bg);
+  border-radius:0 10px 10px 0;padding:12px 16px;font-size:var(--font-size-mini);line-height:1.7;
+  color:var(--amber-ink);margin-top:14px;display:none;
+  box-shadow:inset 2px 2px 6px rgba(181,133,31,.12),inset -2px -2px 5px rgba(255,251,240,.8)}
+.warnbox.is-on{display:block}
+/* El diseño destaca el pago con un borde navy de 2px; en neu el énfasis es
+   relieve + anillo interior, no trazo suelto. */
+.paybox{border-radius:var(--radius-12);padding:16px 18px;margin-top:16px;background:var(--bg);
+  box-shadow:var(--neu-out-sm),inset 0 0 0 2px rgba(21,31,71,.45)}
+.paybox h4{margin:0 0 12px;font-size:var(--font-size-tiny);font-weight:800;color:var(--navy);
+  text-transform:uppercase;letter-spacing:.05em}
+.paygrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:14px}
+.pay label{display:block;font-size:var(--font-size-mini);font-weight:700;color:var(--color-text-strong);margin-bottom:5px}
+.pay .money{position:relative}
+.pay .money > span{position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  font-size:18px;font-weight:800;color:var(--navy)}
+.pay input{width:100%;height:52px;box-sizing:border-box;border:0;outline:0;border-radius:12px;
+  padding:0 14px 0 32px;font-size:21px;font-weight:800;color:var(--navy);
+  font-variant-numeric:tabular-nums;background:var(--bg);box-shadow:var(--neu-in-sm),var(--neu-edge)}
+.pay input:focus{box-shadow:var(--neu-in-sm),0 0 0 2px var(--indigo)}
+.pay small{display:block;margin-top:4px;font-size:var(--font-size-micro);color:var(--color-text-weak)}
+.tramos{display:flex;height:24px;border-radius:8px;overflow:hidden;background:var(--bg);
+  box-shadow:var(--neu-in-sm);margin:8px 0 6px}
+.tramo{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800}
+.tleg{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.tleg span{display:inline-flex;align-items:center;gap:6px;font-size:var(--font-size-mini);color:var(--color-text-weak)}
+.tleg i{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.impacto{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-top:12px}
+.impacto b{font-size:var(--font-size-tiny);color:var(--navy)}
+.impacto .big{font-size:22px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+.okcard{background:var(--bg);border-radius:var(--radius-16);padding:22px;margin-bottom:16px;
+  box-shadow:var(--neu-out),inset 0 0 0 2px var(--green-bd);display:none}
+.okcard.is-on{display:block}
+.okhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.okhead .ic{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
+  background:var(--green-bg);color:var(--green-ink);box-shadow:var(--neu-out-sm)}
+.okhead h3{margin:0;font-size:var(--font-size-h4);line-height:var(--line-height-h4);font-weight:800;color:var(--navy)}
+.okhead p{margin:0;width:100%;font-size:var(--font-size-tiny);color:var(--color-text-weak)}
+.emptybox{border:1px dashed rgba(122,134,154,.75);border-radius:var(--radius-12);padding:24px;
+  background:rgba(255,255,255,.35);font-size:var(--font-size-tiny);color:var(--color-text-weak);
+  line-height:1.7;display:none}
+.emptybox.is-on{display:block}
+.emptybox b{display:block;color:var(--navy)}
+.chip.red{background:var(--red-bg);color:var(--red-ink);border-color:var(--red-bd)}
+
 /* ─── 23 · Gráfico de barras ─────────────────────────────────────────── */
 /* TRAMPA: un height:% NO resuelve si el padre no tiene altura definida.
    El track intermedio con flex:1 es lo único que se la da. No colapsarlo. */
@@ -815,6 +886,10 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
             </span>
           </div>
           <div class="right">
+            <span class="chip green">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="7"/></svg>
+              Estudio actuarial vigente al 31/12/2025
+            </span>
             <!-- MOVIMIENTO 3 · causa-efecto explícita -->
             <span class="chip grey">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/><path d="M12 19H5V5h7"/></svg>
@@ -857,7 +932,7 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
 
           <div class="answer-bd">
             <div class="figure">
-              <span class="num">68,420.00</span>
+              <span class="num">68.420,00</span>
               <span class="lbl">provisión del periodo · USD</span>
             </div>
             <p class="trace">
@@ -876,10 +951,10 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <table class="at">
                 <thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
                 <tbody>
-                  <tr><td>Gasto por jubilación patronal</td><td class="n">68,420.00</td><td class="n">—</td></tr>
-                  <tr><td class="ind">Provisión por jubilación patronal</td><td class="n">—</td><td class="n">68,420.00</td></tr>
+                  <tr><td>Gasto por jubilación patronal</td><td class="n">68.420,00</td><td class="n">—</td></tr>
+                  <tr><td class="ind">Provisión por jubilación patronal</td><td class="n">—</td><td class="n">68.420,00</td></tr>
                 </tbody>
-                <tfoot><tr><td>Totales</td><td class="n">68,420.00</td><td class="n">68,420.00</td></tr></tfoot>
+                <tfoot><tr><td>Totales</td><td class="n">68.420,00</td><td class="n">68.420,00</td></tr></tfoot>
               </table>
             </div>
 
@@ -893,10 +968,10 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <table class="at">
                 <thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
                 <tbody>
-                  <tr><td>Activo por impuesto diferido</td><td class="n">15,394.50</td><td class="n">—</td></tr>
-                  <tr><td class="ind">Gasto por impuesto a la renta diferido</td><td class="n">—</td><td class="n">15,394.50</td></tr>
+                  <tr><td>Activo por impuesto diferido</td><td class="n">15.394,50</td><td class="n">—</td></tr>
+                  <tr><td class="ind">Gasto por impuesto a la renta diferido</td><td class="n">—</td><td class="n">15.394,50</td></tr>
                 </tbody>
-                <tfoot><tr><td>Totales</td><td class="n">15,394.50</td><td class="n">15,394.50</td></tr></tfoot>
+                <tfoot><tr><td>Totales</td><td class="n">15.394,50</td><td class="n">15.394,50</td></tr></tfoot>
               </table>
             </div>
 
@@ -911,17 +986,17 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
         <details class="fold" data-tour="sustento">
           <summary>
             <span class="ft">Composición de la provisión</span>
-            <span class="fsum">Cierra en 435,250.00</span>
+            <span class="fsum">Cierra en 435.250,00</span>
             <span class="car"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
           </summary>
           <div class="fold-bd">
             <div class="chain">
-              <div class="box"><div class="op">&nbsp;</div><div class="bl">Saldo inicial</div><div class="bn">412,850.00</div></div>
-              <div class="box"><div class="op">+</div><div class="bl">Provisión del periodo</div><div class="bn">68,420.00</div></div>
-              <div class="box neg"><div class="op">±</div><div class="bl">Ajuste actuarial (ORI)</div><div class="bn">−12,340.00</div></div>
-              <div class="box neg"><div class="op">−</div><div class="bl">Provisión no utilizada</div><div class="bn">−24,180.00</div></div>
-              <div class="box neg"><div class="op">−</div><div class="bl">Pagos del periodo</div><div class="bn">−9,500.00</div></div>
-              <div class="box tot"><div class="op">=</div><div class="bl">Saldo final</div><div class="bn">435,250.00</div></div>
+              <div class="box"><div class="op">&nbsp;</div><div class="bl">Saldo inicial</div><div class="bn">412.850,00</div></div>
+              <div class="box"><div class="op">+</div><div class="bl">Provisión del periodo</div><div class="bn">68.420,00</div></div>
+              <div class="box neg"><div class="op">±</div><div class="bl">Ajuste actuarial (ORI)</div><div class="bn">−12.340,00</div></div>
+              <div class="box neg"><div class="op">−</div><div class="bl">Provisión no utilizada</div><div class="bn">−24.180,00</div></div>
+              <div class="box neg"><div class="op">−</div><div class="bl">Pagos del periodo</div><div class="bn">−9.500,00</div></div>
+              <div class="box tot"><div class="op">=</div><div class="bl">Saldo final</div><div class="bn">435.250,00</div></div>
             </div>
             <div class="cuadra">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
@@ -937,7 +1012,7 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
         <details class="fold">
           <summary>
             <span class="ft">Provisión no utilizada</span>
-            <span class="fsum">24,180.00 liberados por 3 salidas</span>
+            <span class="fsum">24.180,00 liberados por 3 salidas</span>
             <span class="car"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
           </summary>
           <div class="fold-bd">
@@ -946,10 +1021,10 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <table class="gt">
                 <thead><tr><th>Concepto</th><th class="n">Valor</th><th>Efecto tributario</th></tr></thead>
                 <tbody>
-                  <tr><td>Reverso de gasto no deducible temporario</td><td class="n">18,135.00</td><td><span class="chip indigo">Se declara</span></td></tr>
-                  <tr><td>Reverso de gasto deducible</td><td class="n">6,045.00</td><td><span class="chip grey">Sin efecto</span></td></tr>
+                  <tr><td>Reverso de gasto no deducible temporario</td><td class="n">18.135,00</td><td><span class="chip indigo">Se declara</span></td></tr>
+                  <tr><td>Reverso de gasto deducible</td><td class="n">6.045,00</td><td><span class="chip grey">Sin efecto</span></td></tr>
                 </tbody>
-                <tfoot><tr><td style="padding:12px 16px;font-weight:800;background:#fbfcfe">Total liberado</td><td class="n" style="padding:12px 16px;background:#fbfcfe">24,180.00</td><td style="background:#fbfcfe"></td></tr></tfoot>
+                <tfoot><tr><td style="padding:12px 16px;font-weight:800;background:#fbfcfe">Total liberado</td><td class="n" style="padding:12px 16px;background:#fbfcfe">24.180,00</td><td style="background:#fbfcfe"></td></tr></tfoot>
               </table>
             </div>
             <p class="trace" style="margin-top:14px">
@@ -961,16 +1036,16 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
         <details class="fold">
           <summary>
             <span class="ft">Impuesto diferido</span>
-            <span class="fsum">Cierra en 103,716.50</span>
+            <span class="fsum">Cierra en 103.716,50</span>
             <span class="car"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></span>
           </summary>
           <div class="fold-bd">
             <p class="trace">El vale a favor de la empresa: lo que el Estado no aceptó todavía pero aceptará más adelante.</p>
             <div class="chain">
-              <div class="box"><div class="op">&nbsp;</div><div class="bl">Saldo inicial</div><div class="bn">92,400.00</div></div>
-              <div class="box"><div class="op">+</div><div class="bl">Generado</div><div class="bn">15,394.50</div></div>
-              <div class="box neg"><div class="op">−</div><div class="bl">Consumido</div><div class="bn">−4,078.00</div></div>
-              <div class="box tot"><div class="op">=</div><div class="bl">Saldo final</div><div class="bn">103,716.50</div></div>
+              <div class="box"><div class="op">&nbsp;</div><div class="bl">Saldo inicial</div><div class="bn">92.400,00</div></div>
+              <div class="box"><div class="op">+</div><div class="bl">Generado</div><div class="bn">15.394,50</div></div>
+              <div class="box neg"><div class="op">−</div><div class="bl">Consumido</div><div class="bn">−4.078,00</div></div>
+              <div class="box tot"><div class="op">=</div><div class="bl">Saldo final</div><div class="bn">103.716,50</div></div>
             </div>
           </div>
         </details>
@@ -982,59 +1057,147 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
         </div>
       </section>
 
-      <!-- ═══════════ PANEL 2 · SALIDAS ═══════════ -->
+      <!-- ═══════════ PANEL 2 · SALIDAS — empatado al requerimiento base (Claude Design, 2026-09-07) ═══════════ -->
       <section class="panel" id="p-salidas">
+        <div class="phead">
+          <button class="link-act" data-go="cierre" style="align-self:flex-start;text-decoration:none">← Mi cierre del periodo</button>
+          <h2>Registrar salida</h2>
+          <p>Conoce el efecto contable y tributario en tiempo real de las salidas del año.</p>
+        </div>
+
+        <!-- 1 · Salidas ya registradas: primero lo que ya afecta el cierre -->
         <div class="card">
-          <h3>Registrar una salida</h3>
-          <p class="lead">Es la única pantalla donde tú aportas información. Todo lo demás lo calculamos nosotros.</p>
-
-          <div class="grid2">
-            <div class="frow"><div class="fl">Trabajador</div><div class="fv">
-              <select id="fTrab"><option>Buscar por nombre o cédula…</option><option>Mariana Salcedo Ruiz · 1712345678</option><option>Jorge Andrade Peña · 0918273645</option><option>Elena Cabrera Mora · 1104567890</option></select>
-            </div></div>
-            <div class="frow"><div class="fl">Motivo de salida</div><div class="fv">
-              <select id="fMot"><option>Renuncia voluntaria</option><option>Despido intempestivo</option><option>Terminación de contrato</option><option>Jubilación</option></select>
-            </div></div>
-            <div class="frow"><div class="fl">Fecha de salida</div><div class="fv"><input type="date" value="2025-09-30"></div></div>
-            <div class="frow"><div class="fl">Pagó jubilación</div><div class="fv"><input id="fPagJ" type="text" value="0.00" inputmode="decimal"></div></div>
-            <div class="frow"><div class="fl">Pagó desahucio</div><div class="fv"><input id="fPagD" type="text" value="4,180.00" inputmode="decimal"></div></div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px">
+            <div>
+              <h3 style="margin:0 0 2px">Salidas registradas en este periodo</h3>
+              <p class="lead" style="margin:0" id="salResumen"></p>
+            </div>
+            <span class="chip grey">Filtro aplicado: diciembre 2025</span>
           </div>
-
-          <div class="note">
-            <b>Un cero no es un dato que falte.</b> Los dos beneficios se pagan por separado: alguien puede
-            cobrar el desahucio al salir y no llegar nunca a la jubilación. Si esa persona no accedió a un
-            beneficio, deja el campo en cero y lo tratamos distinto.
+          <div class="tw" id="salTablaWrap">
+            <table class="gt">
+              <thead><tr><th>Trabajador</th><th>Fecha</th><th>Motivo</th><th class="n">Provisión reversada</th><th class="n">Efecto en imp. diferido</th><th></th></tr></thead>
+              <tbody id="salRows"></tbody>
+              <tfoot><tr>
+                <td style="font-weight:800">Total del periodo</td><td></td><td></td>
+                <td class="n" id="salTotLib"></td>
+                <td class="n" id="salTotAid" style="color:var(--indigo-ink)"></td><td></td>
+              </tr></tfoot>
+            </table>
           </div>
-
-          <!-- MOVIMIENTO 3 · el delta antes de confirmar -->
-          <div class="delta" data-tour="delta">
-            <h4>Qué cambia en tu cierre si confirmas</h4>
-            <div class="dl"><span>Provisión liberada</span><span class="dv up">+8,240.00</span></div>
-            <div class="dl"><span>De eso, se declara (no deducible temporario)</span><span class="dv">6,180.00</span></div>
-            <div class="dl"><span>De eso, sin efecto tributario</span><span class="dv">2,060.00</span></div>
-            <div class="dl"><span>Impuesto diferido que se consume</span><span class="dv dn">−1,545.00</span></div>
-            <div class="dl"><span>Saldo final de la provisión pasaría a</span><span class="dv">427,010.00</span></div>
-          </div>
-
-          <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap">
-            <button class="btn pri lg" id="btnConf">Confirmar salida</button>
-            <button class="btn lg" data-go="cierre">Cancelar</button>
+          <div class="emptybox" id="salVacio">
+            <b>Todavía no has registrado salidas en este periodo.</b>
+            Cuando lo hagas, aquí verás cuánta provisión se liberó y cómo afecta tu declaración.
+            Empieza con el formulario de abajo.
           </div>
         </div>
 
-        <div class="card">
-          <h3>Salidas registradas este año</h3>
-          <p class="lead">3 salidas · liberaron 24,180.00 en total. Estas son las que están afectando tu cierre.</p>
-          <div class="tw">
-            <table class="gt">
-              <thead><tr><th>Trabajador</th><th>Fecha</th><th>Motivo</th><th class="n">Pagó jubilación</th><th class="n">Pagó desahucio</th><th class="n">Liberó</th></tr></thead>
-              <tbody>
-                <tr><td>Rosa Villamar Chóez</td><td>14/03/2025</td><td>Renuncia voluntaria</td><td class="n">0.00</td><td class="n">3,920.00</td><td class="n">9,640.00</td></tr>
-                <tr><td>Iván Zambrano Lara</td><td>02/06/2025</td><td>Terminación de contrato</td><td class="n">0.00</td><td class="n">2,410.00</td><td class="n">6,890.00</td></tr>
-                <tr><td>Patricia Núñez Vera</td><td>21/08/2025</td><td>Despido intempestivo</td><td class="n">0.00</td><td class="n">5,145.00</td><td class="n">7,650.00</td></tr>
-              </tbody>
-            </table>
+        <!-- 4 · Confirmación con resultado -->
+        <div class="okcard" id="okCard">
+          <div class="okhead">
+            <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l5 5L19 7"/></svg></span>
+            <h3>Salida registrada</h3>
+            <span class="chip amber" id="okStatus"></span>
+            <p id="okTexto"></p>
           </div>
+          <div class="chain" id="okCards"></div>
+          <p class="trace" id="okNota" style="margin:0 0 14px"></p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <button class="btn pri lg" data-go="cierre">Ver mi cierre actualizado</button>
+            <button class="btn lg" id="okKardex">Ver su ficha en el kárdex</button>
+            <button class="btn lg" id="okOtra">Registrar otra salida</button>
+          </div>
+        </div>
+
+        <!-- 2 y 3 · Formulario + resultado en vivo -->
+        <div class="sal2">
+          <div class="card" style="margin-bottom:0">
+            <h3>Nueva salida</h3>
+            <p class="lead">Completa la información a continuación. Selecciona los datos requeridos e ingresa el valor pagado.</p>
+
+            <div class="sugwrap">
+              <div class="frow" style="margin-bottom:0"><div class="fl">Trabajador</div><div class="fv">
+                <input id="fTrab" type="text" placeholder="Buscar por nombre o cédula" autocomplete="off">
+              </div></div>
+              <div class="sug" id="sugList"></div>
+            </div>
+            <div class="selbox" id="selBox" style="display:none"></div>
+            <div class="warnbox" id="warnProv"></div>
+
+            <div class="grid2" style="margin-top:14px">
+              <div class="frow"><div class="fl">Motivo de salida</div><div class="fv">
+                <select id="fMot">
+                  <option value="jub">Jubilación patronal</option>
+                  <option value="des">Bonificación por desahucio</option>
+                  <option value="ren">Renuncia voluntaria</option>
+                  <option value="ter">Terminación de contrato</option>
+                </select>
+              </div></div>
+              <div class="frow"><div class="fl">Fecha de salida</div><div class="fv"><input id="fFecha" type="date" value="2025-12-15" min="2025-01-01" max="2025-12-31"></div></div>
+            </div>
+            <p class="trace" style="margin:0">Selecciona una fecha dentro del ejercicio 2025.</p>
+
+            <div class="paybox" data-tour="delta">
+              <h4>Pago del beneficio (USD)</h4>
+              <div class="paygrid">
+                <div class="pay">
+                  <label for="fPagJ">Pago de jubilación patronal</label>
+                  <div class="money"><span>$</span><input id="fPagJ" type="text" inputmode="decimal" placeholder="0,00" value="58.000,00"></div>
+                  <small id="notaJ">Selecciona un trabajador</small>
+                </div>
+                <div class="pay">
+                  <label for="fPagD">Pago de bonificación por desahucio</label>
+                  <div class="money"><span>$</span><input id="fPagD" type="text" inputmode="decimal" placeholder="0,00" value="0,00"></div>
+                  <small id="notaD">Selecciona un trabajador</small>
+                </div>
+              </div>
+              <p class="trace" style="margin:12px 0 0">
+                El impacto tributario y el impuesto diferido se calculan automáticamente a partir de la
+                información registrada. <b style="color:var(--navy)">Un beneficio en cero significa una salida sin
+                acceso a ese beneficio: su crédito fiscal se ajusta, no se revierte.</b>
+              </p>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:0;box-shadow:var(--neu-out),inset 0 0 0 2px rgba(21,31,71,.45)">
+            <h3>Resultado del cálculo</h3>
+            <div id="pvPend">
+              <p class="lead" style="margin:10px 0 4px"><b style="color:var(--navy)">Aquí verás el resultado antes de confirmar.</b></p>
+              <p class="trace">Selecciona al trabajador e ingresa el pago de cada beneficio. Nada se registra hasta que confirmes.</p>
+            </div>
+            <div id="pvBody" style="display:none">
+              <p class="trace" style="margin:4px 0 0" id="pvQuien"></p>
+              <div class="tramos" id="pvTramos"></div>
+              <div class="tleg" id="pvLeg"></div>
+              <p class="trace">El reverso se reconoce en esta proporción: como ingreso gravado lo que fue gasto
+              deducible y como ingreso no sujeto, lo que fue gasto no deducible.</p>
+
+              <div class="delta" style="margin-top:10px">
+                <h4>Qué cambia en tu cierre si confirmas</h4>
+                <div id="pvRows"></div>
+                <div class="impacto"><b>Impacto en la provisión</b><span class="big" id="pvImpacto"></span></div>
+              </div>
+              <div class="warnbox" id="pvExced"></div>
+              <p class="trace" style="margin-top:12px">
+                Efecto en la conciliación: <b id="pvConc" style="color:var(--navy)"></b><br>
+                Proyección del periodo corriente: <b id="pvProy" style="color:var(--navy)"></b>
+              </p>
+              <div style="display:flex;gap:12px;margin-top:16px;flex-wrap:wrap">
+                <button class="btn pri lg" id="btnConf">Confirmar salida</button>
+                <button class="btn lg" data-go="cierre">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:16px">
+          <div class="legal" style="margin:0;flex:1;min-width:min(460px,100%)">
+            Los cálculos usan las provisiones acumuladas del estudio actuarial vigente al 31/12/2025.
+            La información registrada tiene carácter de declaración del cliente (Art. 101 LRTI); los valores
+            del periodo en curso son estimados hasta el cierre definitivo. El CTP no se integra con el SRI
+            ni presenta la declaración: entrega las cifras con su sustento.
+          </div>
+          <button class="link-act" id="cargaMasiva" style="white-space:nowrap;align-self:center">¿Muchas salidas? Carga masiva por archivo</button>
         </div>
       </section>
 
@@ -1056,8 +1219,8 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <table class="at">
                 <thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
                 <tbody>
-                  <tr><td>Gasto por jubilación patronal</td><td class="n">68,420.00</td><td class="n">—</td></tr>
-                  <tr><td class="ind">Provisión por jubilación patronal</td><td class="n">—</td><td class="n">68,420.00</td></tr>
+                  <tr><td>Gasto por jubilación patronal</td><td class="n">68.420,00</td><td class="n">—</td></tr>
+                  <tr><td class="ind">Provisión por jubilación patronal</td><td class="n">—</td><td class="n">68.420,00</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1066,8 +1229,8 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <table class="at">
                 <thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
                 <tbody>
-                  <tr><td>Provisión por jubilación patronal</td><td class="n">24,180.00</td><td class="n">—</td></tr>
-                  <tr><td class="ind">Recuperación de provisiones</td><td class="n">—</td><td class="n">24,180.00</td></tr>
+                  <tr><td>Provisión por jubilación patronal</td><td class="n">24.180,00</td><td class="n">—</td></tr>
+                  <tr><td class="ind">Recuperación de provisiones</td><td class="n">—</td><td class="n">24.180,00</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1080,15 +1243,15 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
             <div class="asiento">
               <div class="asiento-hd"><b>1 · Generación</b></div>
               <table class="at"><thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
-                <tbody><tr><td>Activo por impuesto diferido</td><td class="n">15,394.50</td><td class="n">—</td></tr>
-                <tr><td class="ind">Gasto por impuesto a la renta diferido</td><td class="n">—</td><td class="n">15,394.50</td></tr></tbody></table>
+                <tbody><tr><td>Activo por impuesto diferido</td><td class="n">15.394,50</td><td class="n">—</td></tr>
+                <tr><td class="ind">Gasto por impuesto a la renta diferido</td><td class="n">—</td><td class="n">15.394,50</td></tr></tbody></table>
             </div>
 
             <div class="asiento">
               <div class="asiento-hd"><b>2 · Consumo</b></div>
               <table class="at"><thead><tr><th>Cuenta</th><th class="n">Debe</th><th class="n">Haber</th></tr></thead>
-                <tbody><tr><td>Gasto por impuesto a la renta diferido</td><td class="n">4,078.00</td><td class="n">—</td></tr>
-                <tr><td class="ind">Activo por impuesto diferido</td><td class="n">—</td><td class="n">4,078.00</td></tr></tbody></table>
+                <tbody><tr><td>Gasto por impuesto a la renta diferido</td><td class="n">4.078,00</td><td class="n">—</td></tr>
+                <tr><td class="ind">Activo por impuesto diferido</td><td class="n">—</td><td class="n">4.078,00</td></tr></tbody></table>
             </div>
 
             <div class="asiento">
@@ -1108,11 +1271,11 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <table class="gt">
                 <thead><tr><th>Concepto</th><th class="n">Valor</th><th>Efecto</th></tr></thead>
                 <tbody>
-                  <tr><td>Gasto no deducible del periodo</td><td class="n">61,578.00</td><td><span class="chip amber">Suma a la base</span></td></tr>
-                  <tr><td>Reverso de provisión no utilizada, parte deducible</td><td class="n">6,045.00</td><td><span class="chip green">Resta de la base</span></td></tr>
-                  <tr><td>Ajuste actuarial (ORI)</td><td class="n">12,340.00</td><td><span class="chip grey">No tributa</span></td></tr>
+                  <tr><td>Gasto no deducible del periodo</td><td class="n">61.578,00</td><td><span class="chip amber">Suma a la base</span></td></tr>
+                  <tr><td>Reverso de provisión no utilizada, parte deducible</td><td class="n">6.045,00</td><td><span class="chip green">Resta de la base</span></td></tr>
+                  <tr><td>Ajuste actuarial (ORI)</td><td class="n">12.340,00</td><td><span class="chip grey">No tributa</span></td></tr>
                 </tbody>
-                <tfoot><tr><td style="font-weight:800;background:#fbfcfe;padding:12px 16px">Efecto neto en la base imponible</td><td class="n" style="background:#fbfcfe;padding:12px 16px">+55,533.00</td><td style="background:#fbfcfe"></td></tr></tfoot>
+                <tfoot><tr><td style="font-weight:800;background:#fbfcfe;padding:12px 16px">Efecto neto en la base imponible</td><td class="n" style="background:#fbfcfe;padding:12px 16px">+55.533,00</td><td style="background:#fbfcfe"></td></tr></tfoot>
               </table>
             </div>
           </div>
@@ -1126,9 +1289,9 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <table class="gt">
                 <thead><tr><th>Casillero</th><th>Descripción</th><th class="n">Valor</th></tr></thead>
                 <tbody>
-                  <tr><td><b>7025</b></td><td>Gastos por jubilación patronal no deducibles</td><td class="n">61,578.00</td></tr>
-                  <tr><td><b>7026</b></td><td>Reverso de provisiones no utilizadas</td><td class="n">6,045.00</td></tr>
-                  <tr><td><b>6110</b></td><td>Activo por impuesto diferido</td><td class="n">103,716.50</td></tr>
+                  <tr><td><b>7025</b></td><td>Gastos por jubilación patronal no deducibles</td><td class="n">61.578,00</td></tr>
+                  <tr><td><b>7026</b></td><td>Reverso de provisiones no utilizadas</td><td class="n">6.045,00</td></tr>
+                  <tr><td><b>6110</b></td><td>Activo por impuesto diferido</td><td class="n">103.716,50</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1174,13 +1337,13 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <table class="gt">
                 <thead><tr><th>Trabajador</th><th>Ingreso</th><th class="n">Años</th><th class="n">Provisión acumulada</th><th class="n">Del periodo</th><th>Estado</th></tr></thead>
                 <tbody>
-                  <tr><td>Mariana Salcedo Ruiz</td><td>02/2001</td><td class="n">24.6</td><td class="n">78,410.00</td><td class="n">6,120.00</td><td><span class="chip amber">Cerca de jubilar</span></td></tr>
-                  <tr><td>Jorge Andrade Peña</td><td>07/1998</td><td class="n">27.2</td><td class="n">96,240.00</td><td class="n">4,880.00</td><td><span class="chip green">Con derecho</span></td></tr>
-                  <tr><td>Elena Cabrera Mora</td><td>11/2012</td><td class="n">12.9</td><td class="n">31,570.00</td><td class="n">5,340.00</td><td><span class="chip grey">Activo</span></td></tr>
-                  <tr><td>Luis Paredes Ycaza</td><td>03/2018</td><td class="n">7.5</td><td class="n">14,220.00</td><td class="n">3,910.00</td><td><span class="chip grey">Activo</span></td></tr>
-                  <tr><td>Carmen Ortega Bravo</td><td>09/2009</td><td class="n">16.0</td><td class="n">42,880.00</td><td class="n">5,760.00</td><td><span class="chip grey">Activo</span></td></tr>
+                  <tr><td>Mariana Salcedo Ruiz</td><td>02/2001</td><td class="n">24.6</td><td class="n">78.410,00</td><td class="n">6.120,00</td><td><span class="chip amber">Cerca de jubilar</span></td></tr>
+                  <tr><td>Jorge Andrade Peña</td><td>07/1998</td><td class="n">27.2</td><td class="n">96.240,00</td><td class="n">4.880,00</td><td><span class="chip green">Con derecho</span></td></tr>
+                  <tr><td>Elena Cabrera Mora</td><td>11/2012</td><td class="n">12.9</td><td class="n">31.570,00</td><td class="n">5.340,00</td><td><span class="chip grey">Activo</span></td></tr>
+                  <tr><td>Luis Paredes Ycaza</td><td>03/2018</td><td class="n">7.5</td><td class="n">14.220,00</td><td class="n">3.910,00</td><td><span class="chip grey">Activo</span></td></tr>
+                  <tr><td>Carmen Ortega Bravo</td><td>09/2009</td><td class="n">16.0</td><td class="n">42.880,00</td><td class="n">5.760,00</td><td><span class="chip grey">Activo</span></td></tr>
                 </tbody>
-                <tfoot><tr><td colspan="3" style="font-weight:800;background:#fbfcfe;padding:12px 16px">Total · 142 trabajadores</td><td class="n" style="background:#fbfcfe;padding:12px 16px">435,250.00</td><td class="n" style="background:#fbfcfe;padding:12px 16px">68,420.00</td><td style="background:#fbfcfe"></td></tr></tfoot>
+                <tfoot><tr><td colspan="3" style="font-weight:800;background:#fbfcfe;padding:12px 16px">Total · 142 trabajadores</td><td class="n" style="background:#fbfcfe;padding:12px 16px">435.250,00</td><td class="n" style="background:#fbfcfe;padding:12px 16px">68.420,00</td><td style="background:#fbfcfe"></td></tr></tfoot>
               </table>
             </div>
             <p class="trace" style="margin-top:14px">Este total es exactamente el saldo final de tu cierre. <button class="link-act" data-go="cierre">Volver a Mi cierre</button></p>
@@ -1195,18 +1358,18 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
               <table class="gt">
                 <thead><tr><th>Ejercicio</th><th class="n">Provisión del año</th><th class="n">Acumulado</th><th>Tratamiento</th></tr></thead>
                 <tbody>
-                  <tr><td>2022</td><td class="n">5,340.00</td><td class="n">60,830.00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
-                  <tr><td>2023</td><td class="n">5,720.00</td><td class="n">66,550.00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
-                  <tr><td>2024</td><td class="n">5,740.00</td><td class="n">72,290.00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
-                  <tr><td>2025</td><td class="n">6,120.00</td><td class="n">78,410.00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
+                  <tr><td>2022</td><td class="n">5.340,00</td><td class="n">60.830,00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
+                  <tr><td>2023</td><td class="n">5.720,00</td><td class="n">66.550,00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
+                  <tr><td>2024</td><td class="n">5.740,00</td><td class="n">72.290,00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
+                  <tr><td>2025</td><td class="n">6.120,00</td><td class="n">78.410,00</td><td><span class="chip indigo">No deducible temporario</span></td></tr>
                 </tbody>
               </table>
             </div>
             <div class="delta" style="margin-top:18px">
               <h4>Si esta persona saliera hoy</h4>
-              <div class="dl"><span>Se liberaría</span><span class="dv">78,410.00</span></div>
-              <div class="dl"><span>De eso, se declara</span><span class="dv">58,807.50</span></div>
-              <div class="dl"><span>Impuesto diferido que se consumiría</span><span class="dv dn">−14,701.87</span></div>
+              <div class="dl"><span>Se liberaría</span><span class="dv">78.410,00</span></div>
+              <div class="dl"><span>De eso, se declara</span><span class="dv">58.807,50</span></div>
+              <div class="dl"><span>Impuesto diferido que se consumiría</span><span class="dv dn">−14.701,87</span></div>
             </div>
             <div class="note">
               Esta proyección no se muestra para quienes <b>ya tienen derecho a la pensión</b>: en ese caso
@@ -1228,11 +1391,11 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
             <h3>Provisión acumulada, año por año</h3>
             <p class="lead">Cómo viene creciendo tu pasivo laboral.</p>
             <div class="bars">
-              <div class="bar"><span class="bv">286,400</span><div class="btrack"><div class="bcol" style="height:44%"></div></div><span class="bx">2021</span></div>
-              <div class="bar"><span class="bv">324,180</span><div class="btrack"><div class="bcol" style="height:56%"></div></div><span class="bx">2022</span></div>
-              <div class="bar"><span class="bv">361,920</span><div class="btrack"><div class="bcol" style="height:68%"></div></div><span class="bx">2023</span></div>
-              <div class="bar"><span class="bv">412,850</span><div class="btrack"><div class="bcol" style="height:84%"></div></div><span class="bx">2024</span></div>
-              <div class="bar"><span class="bv">435,250</span><div class="btrack"><div class="bcol" style="height:100%"></div></div><span class="bx">2025</span></div>
+              <div class="bar"><span class="bv">286.400</span><div class="btrack"><div class="bcol" style="height:44%"></div></div><span class="bx">2021</span></div>
+              <div class="bar"><span class="bv">324.180</span><div class="btrack"><div class="bcol" style="height:56%"></div></div><span class="bx">2022</span></div>
+              <div class="bar"><span class="bv">361.920</span><div class="btrack"><div class="bcol" style="height:68%"></div></div><span class="bx">2023</span></div>
+              <div class="bar"><span class="bv">412.850</span><div class="btrack"><div class="bcol" style="height:84%"></div></div><span class="bx">2024</span></div>
+              <div class="bar"><span class="bv">435.250</span><div class="btrack"><div class="bcol" style="height:100%"></div></div><span class="bx">2025</span></div>
             </div>
             <p class="trace" style="margin-top:16px">
               El detalle persona por persona vive en <button class="link-act" data-go="kardex">Kárdex</button>,
@@ -1246,11 +1409,11 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
             <h3>Impuesto diferido acumulado</h3>
             <p class="lead">El vale a favor, año por año.</p>
             <div class="bars">
-              <div class="bar"><span class="bv">58,900</span><div class="btrack"><div class="bcol" style="height:40%"></div></div><span class="bx">2021</span></div>
-              <div class="bar"><span class="bv">69,340</span><div class="btrack"><div class="bcol" style="height:52%"></div></div><span class="bx">2022</span></div>
-              <div class="bar"><span class="bv">80,120</span><div class="btrack"><div class="bcol" style="height:66%"></div></div><span class="bx">2023</span></div>
-              <div class="bar"><span class="bv">92,400</span><div class="btrack"><div class="bcol" style="height:82%"></div></div><span class="bx">2024</span></div>
-              <div class="bar"><span class="bv">103,716</span><div class="btrack"><div class="bcol" style="height:100%"></div></div><span class="bx">2025</span></div>
+              <div class="bar"><span class="bv">58.900</span><div class="btrack"><div class="bcol" style="height:40%"></div></div><span class="bx">2021</span></div>
+              <div class="bar"><span class="bv">69.340</span><div class="btrack"><div class="bcol" style="height:52%"></div></div><span class="bx">2022</span></div>
+              <div class="bar"><span class="bv">80.120</span><div class="btrack"><div class="bcol" style="height:66%"></div></div><span class="bx">2023</span></div>
+              <div class="bar"><span class="bv">92.400</span><div class="btrack"><div class="bcol" style="height:82%"></div></div><span class="bx">2024</span></div>
+              <div class="bar"><span class="bv">103.716</span><div class="btrack"><div class="bcol" style="height:100%"></div></div><span class="bx">2025</span></div>
             </div>
           </div>
         </div>
@@ -1343,12 +1506,222 @@ table.gt tfoot td{background:rgba(163,177,198,.16)!important;
     say('Ejercicio '+this.value+' cargado');
   });
 
-  /* ── Confirmar salida: muestra el efecto ── */
-  $('#btnConf').addEventListener('click',function(){
-    var n=$('#nSal'); n.textContent=String(parseInt(n.textContent,10)+1);
-    say('Salida registrada · tu cierre se actualizó');
-    setTimeout(function(){go('cierre')},700);
+  /* ══ SALIDAS — empatada al requerimiento base de Claude Design (2026-09-07) ══
+     Reglas del requerimiento: la provisión USADA en el pago recupera su crédito
+     (REVERSIÓN del AID); la NO utilizada corresponde a un beneficio al que no se
+     accedió: su crédito se pierde (AJUSTE). Ambas disminuyen el activo. El pago
+     que excede la provisión es gasto deducible del ejercicio en que se paga. */
+  var TASA=0.25;
+  var PROV_GRUPO=475000.00;   /* jubilación 435.250,00 + desahucio 39.750,00 */
+  var PADRON={
+    ms:{n:'Mariana Salcedo Ruiz', ci:'1712345678', ts:'24.6 años', st:'Cerca de jubilar', pj:78410.00, pd:6940.00, ded:20, tmp:70, per:10},
+    ja:{n:'Jorge Andrade Peña',   ci:'0918273645', ts:'27.2 años', st:'Con derecho',      pj:96240.00, pd:7850.00, ded:25, tmp:65, per:10},
+    ec:{n:'Elena Cabrera Mora',   ci:'1104567890', ts:'12.9 años', st:'Activo',           pj:31570.00, pd:4120.00, ded:30, tmp:60, per:10},
+    lp:{n:'Luis Paredes Ycaza',   ci:'0923456789', ts:'7.5 años',  st:'Activo',           pj:14220.00, pd:1980.00, ded:30, tmp:55, per:15},
+    co:{n:'Carmen Ortega Bravo',  ci:'1723456789', ts:'16.0 años', st:'Activo',           pj:42880.00, pd:5310.00, ded:28, tmp:62, per:10},
+    am:{n:'Andrés Mite Solano',   ci:'0956781234', ts:'3.2 años',  st:'Activo',           pj:0, pd:0, ded:0, tmp:0, per:0}
+  };
+  var SALIDAS=[
+    {n:'Rosa Villamar Chóez', ci:'0912345678', f:'14/03/2025', m:'Renuncia voluntaria',     lib:9640.00, aid:1620.00, nat:'aju'},
+    {n:'Iván Zambrano Lara',  ci:'1709876543', f:'02/06/2025', m:'Terminación de contrato', lib:6890.00, aid:1158.00, nat:'aju'},
+    {n:'Patricia Núñez Vera', ci:'1305678901', f:'21/08/2025', m:'Despido intempestivo',    lib:7650.00, aid:1300.00, nat:'rev'}
+  ];
+  var MOTIVO={jub:'Jubilación patronal',des:'Bonificación por desahucio',ren:'Renuncia voluntaria',ter:'Terminación de contrato'};
+  var selId='ja', usados={};
+
+  function fmt(x){
+    var s=Math.abs(x).toLocaleString('es-EC',{minimumFractionDigits:2,maximumFractionDigits:2});
+    return (x<0?'−$':'$')+s;
+  }
+  function num(v){
+    var n=parseFloat(String(v||'').replace(/\./g,'').replace(',','.'));
+    return (isNaN(n)||n<0)?null:n;
+  }
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+
+  function renderTabla(){
+    var tot=0, totA=0, html='';
+    SALIDAS.forEach(function(s){
+      tot+=s.lib; totA+=s.aid;
+      var badge = s.nat==='rev'
+        ? '<span class="badge-nat rev">Reversión · crédito recuperado</span>'
+        : '<span class="badge-nat aju">Ajuste · crédito perdido</span>';
+      html+='<tr><td><div class="tcell"><b style="color:var(--navy)">'+esc(s.n)+'</b><small>C.I. '+s.ci+'</small>'+badge+'</div></td>'
+        +'<td>'+s.f+'</td><td>'+esc(s.m)+'</td>'
+        +'<td class="n">'+fmt(s.lib)+'</td>'
+        +'<td class="n" style="color:var(--indigo-ink)">'+fmt(-s.aid)+'</td>'
+        +'<td class="n"><button class="link-act" data-go="kardex">Kárdex →</button></td></tr>';
+    });
+    $('#salRows').innerHTML=html;
+    $('#salTotLib').textContent=fmt(tot);
+    $('#salTotAid').textContent=fmt(-totA);
+    $('#salResumen').textContent = SALIDAS.length
+      ? SALIDAS.length+' salidas: '+fmt(tot)+' de provisión no utilizada en el periodo'
+      : 'Filtradas al periodo en curso · ninguna salida por ahora';
+    $('#salTablaWrap').style.display=SALIDAS.length?'':'none';
+    $('#salVacio').classList.toggle('is-on',!SALIDAS.length);
+    var n=$('#nSal'); if(n) n.textContent=String(SALIDAS.length);
+  }
+
+  /* ── buscador: solo se ofrece a quien no tiene salida registrada ── */
+  function disponibles(){
+    return Object.keys(PADRON).filter(function(k){return !usados[k]});
+  }
+  function renderSug(){
+    var q=$('#fTrab').value.trim().toLowerCase();
+    var list=$('#sugList');
+    if(!q || selId){list.classList.remove('is-on');return}
+    var m=disponibles().filter(function(k){
+      var w=PADRON[k];
+      return w.n.toLowerCase().indexOf(q)>=0 || w.ci.indexOf(q)>=0;
+    });
+    if(!m.length){list.classList.remove('is-on');return}
+    list.innerHTML=m.map(function(k){
+      var w=PADRON[k];
+      return '<button type="button" data-id="'+k+'"><b>'+esc(w.n)+' · '+w.ci+'</b>'
+        +'<small>C.I. '+w.ci+' · '+esc(w.st)+' · '+esc(w.ts)+'</small></button>';
+    }).join('');
+    list.classList.add('is-on');
+  }
+  function pick(id){
+    selId=id;
+    var w=PADRON[id];
+    $('#fTrab').value=w.n;
+    $('#sugList').classList.remove('is-on');
+    $('#selBox').style.display='';
+    $('#selBox').innerHTML='<b>'+esc(w.n)+' · C.I. '+w.ci+'</b><br>'
+      +'Estatus: <b>'+esc(w.st)+'</b> · Tiempo de servicio: <b>'+esc(w.ts)+'</b> · '
+      +'Provisión acumulada: <b>'+fmt(w.pj+w.pd)+'</b>';
+    $('#notaJ').textContent='Provisión acumulada: '+fmt(w.pj);
+    $('#notaD').textContent='Provisión acumulada: '+fmt(w.pd);
+    var warn=$('#warnProv');
+    if(w.pj+w.pd===0){
+      warn.classList.add('is-on');
+      warn.innerHTML='<b>'+esc(w.n)+' no tiene provisión acumulada:</b> su tiempo de servicio ('+esc(w.ts)+') es inferior a los 10 años que exige la norma. La salida puede registrarse, pero no libera provisión.';
+    } else warn.classList.remove('is-on');
+    calc();
+  }
+  $('#fTrab').addEventListener('input',function(){
+    selId=null;
+    $('#selBox').style.display='none';
+    $('#warnProv').classList.remove('is-on');
+    $('#notaJ').textContent='Selecciona un trabajador';
+    $('#notaD').textContent='Selecciona un trabajador';
+    renderSug(); calc();
   });
+  $('#fTrab').addEventListener('focus',renderSug);
+  $('#sugList').addEventListener('click',function(e){
+    var b=e.target.closest('button[data-id]'); if(b) pick(b.dataset.id);
+  });
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.sugwrap')) $('#sugList').classList.remove('is-on');
+  });
+
+  /* ── cálculo en vivo ── */
+  var R={};
+  function calc(){
+    var w=selId?PADRON[selId]:null;
+    var pj=num($('#fPagJ').value), pd=num($('#fPagD').value);
+    var listo=!!w && !(pj===null&&pd===null) && (w.pj+w.pd)>0;
+    $('#pvPend').style.display=listo?'none':'';
+    $('#pvBody').style.display=listo?'':'none';
+    if(!listo) return;
+    pj=pj||0; pd=pd||0;
+    var R2=function(x){return Math.round(x*100)/100};
+    var usoJ=R2(Math.min(pj,w.pj)), usoD=R2(Math.min(pd,w.pd));
+    var util=R2(usoJ+usoD), provT=R2(w.pj+w.pd);
+    var noUt=R2(provT-util);
+    var exc=R2(Math.max(pj-w.pj,0)+Math.max(pd-w.pd,0));
+    var grav=R2(noUt*w.ded/100), noSuj=R2(noUt-grav);
+    var aidRev=R2(util*w.tmp/100*TASA), aidAju=R2(noUt*w.tmp/100*TASA);
+    R={w:w,pj:pj,pd:pd,usoJ:usoJ,usoD:usoD,util:util,noUt:noUt,exc:exc,grav:grav,noSuj:noSuj,aidRev:aidRev,aidAju:aidAju};
+
+    $('#pvQuien').textContent='Desglose según normativa tributaria · '+w.n;
+    var tramos=[
+      {l:'Deducible',      c:'#0d9668', p:w.ded},
+      {l:'ND temporario',  c:'#2563eb', p:w.tmp},
+      {l:'ND permanente',  c:'#c0392b', p:w.per}
+    ].filter(function(t){return t.p>0});
+    $('#pvTramos').innerHTML=tramos.map(function(t){
+      var txt=t.p>14 ? String(t.p).replace('.',',')+'%' : '';
+      return '<div class="tramo" style="width:'+t.p+'%;background:'+t.c+'">'+txt+'</div>';
+    }).join('');
+    $('#pvLeg').innerHTML=tramos.map(function(t){
+      return '<span><i style="background:'+t.c+'"></i>'+t.l+'</span>';
+    }).join('');
+
+    var rows=[
+      ['Uso de provisión de jubilación patronal', fmt(usoJ), ''],
+      ['Uso de provisión de bonificación por desahucio', fmt(usoD), ''],
+      ['Provisión no utilizada (reverso)', fmt(noUt), ''],
+      ['Reverso como ingreso gravado', fmt(grav), 'var(--green-ink)'],
+      ['Reverso como ingreso no sujeto', fmt(noSuj), 'var(--red-ink)'],
+      ['Reversión del AID por pago efectivo', fmt(-aidRev), 'var(--green-ink)'],
+      ['Ajuste del AID por salida sin pago', fmt(-aidAju), 'var(--red-ink)']
+    ];
+    $('#pvRows').innerHTML=rows.map(function(r){
+      return '<div class="dl"><span>'+r[0]+'</span><span class="dv"'+(r[2]?' style="color:'+r[2]+'"':'')+'>'+r[1]+'</span></div>';
+    }).join('');
+    $('#pvImpacto').textContent='−'+(provT/PROV_GRUPO*100).toFixed(1).replace('.',',')+'%';
+
+    var ex=$('#pvExced');
+    if(exc>0){
+      ex.classList.add('is-on');
+      ex.innerHTML='El pago real supera la provisión constituida: el exceso de <b>'+fmt(exc)+'</b> es gasto deducible del ejercicio en que se paga, y no queda provisión por reversar.';
+    } else ex.classList.remove('is-on');
+
+    $('#pvConc').textContent=fmt(-noSuj)+' de ingreso no sujeto resta de la base imponible'
+      +(exc>0?' · '+fmt(exc)+' de gasto deducible adicional':'');
+    var f=($('#fFecha').value||'2025-12-15').split('-').reverse().join('/');
+    $('#pvProy').textContent='incluye la porción devengada del año en curso al '+f;
+  }
+  ['fPagJ','fPagD','fMot','fFecha'].forEach(function(id){
+    var el=document.getElementById(id);
+    el.addEventListener('input',calc); el.addEventListener('change',calc);
+  });
+
+  /* ── confirmar: cambia el padrón y muestra el resultado, sin salir ── */
+  $('#btnConf').addEventListener('click',function(){
+    if(!R.w) return;
+    var mot=$('#fMot').value;
+    var f=($('#fFecha').value||'2025-12-15').split('-').reverse().join('/');
+    SALIDAS.push({n:R.w.n, ci:R.w.ci, f:f, m:MOTIVO[mot], lib:R.noUt,
+      aid:Math.round((R.aidRev+R.aidAju)*100)/100, nat:(R.aidAju>R.aidRev?'aju':'rev')});
+    usados[selId]=true;
+    renderTabla();
+    $('#okTexto').textContent=R.w.n+' salió por '+MOTIVO[mot].toLowerCase()+' el '+f
+      +' con un pago de '+fmt(R.pj+R.pd)+'. Ya está incluida en tu cierre del ejercicio 2025.';
+    $('#okStatus').textContent='Su estatus en el padrón pasó a '+(mot==='jub'?'Jubilado':'Cesante')+' · preliminar';
+    $('#okNota').textContent='Preliminar: el ejercicio 2025 está en curso y el cambio se confirma con el cierre definitivo del estudio.';
+    var cards=[
+      ['Provisión utilizada en el pago', fmt(R.util), 'Consumida, no reversada', 'var(--navy)'],
+      ['Provisión no utilizada · reversada', fmt(R.noUt), 'Gravado '+fmt(R.grav)+' · no sujeto '+fmt(R.noSuj), 'var(--navy)'],
+      ['Reversión del AID', fmt(-R.aidRev), 'Crédito recuperado por el pago efectivo', 'var(--green-ink)'],
+      ['Ajuste del AID', fmt(-R.aidAju), 'Crédito perdido: sin acceso al beneficio', 'var(--red-ink)']
+    ];
+    $('#okCards').innerHTML=cards.map(function(c){
+      return '<div class="box"><div class="bl">'+c[0]+'</div><div class="bn" style="color:'+c[3]+'">'+c[1]+'</div><div class="bl" style="margin:6px 0 0">'+c[2]+'</div></div>';
+    }).join('');
+    $('#okCard').classList.add('is-on');
+    $('#okCard').scrollIntoView({block:'start',behavior:'smooth'});
+    say('Salida registrada · tu cierre se actualizó');
+  });
+  $('#okOtra').addEventListener('click',function(){
+    selId=null; R={};
+    $('#fTrab').value=''; $('#fPagJ').value=''; $('#fPagD').value='';
+    $('#selBox').style.display='none'; $('#warnProv').classList.remove('is-on');
+    $('#notaJ').textContent='Selecciona un trabajador';
+    $('#notaD').textContent='Selecciona un trabajador';
+    $('#okCard').classList.remove('is-on');
+    calc(); $('#fTrab').focus();
+  });
+  $('#okKardex').addEventListener('click',function(){go('kardex')});
+  $('#cargaMasiva').addEventListener('click',function(){
+    say('La carga masiva llega con la integración: en la maqueta solo se representa.');
+  });
+
+  renderTabla();
+  pick('ja');   /* ejemplo precargado: pago parcial de jubilación → muestra los dos movimientos del AID */
 
   /* ══ TOUR (patrón spotlight de ACTAF-5236) ══ */
   var steps=[
